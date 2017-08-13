@@ -240,7 +240,7 @@ class PostMetaBox {
 
 			// Wrap the input.
 			$input = "
-				<div>$value $setting_label</div>
+				<div>$setting_label</div>
 				$checkboxes
 			";
 
@@ -251,7 +251,7 @@ class PostMetaBox {
 
 			// Wrap the input.
 			$input = "
-				<div>$value $setting_label</div>
+				<div>$setting_label</div>
 				$radios
 			";
 
