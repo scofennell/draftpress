@@ -17,23 +17,12 @@ trait Form {
 		// Will hold cleaned values.
 		$clean = array();
 
+		if( ! is_array( $dirty ) ) { return wp_kses_post( $dirty ); }
+
 		// For each section of settings...
-		foreach( $dirty as $section => $settings ) {
+		foreach( $dirty as $k => $v ) {
 
-			// For each setting...
-			foreach( $settings as $k => $v ) {
-
-				// Let's call it good to just to sanitize text field.
-				if( is_scalar( $v ) ) {
-					$v = sanitize_text_field( $v );
-				} elseif( is_array( $v ) ) {
-					$v = array_map( 'sanitize_text_field', $v );
-				}
-
-				// Nice!  Pass the cleaned value into the array.
-				$clean[ $section ][ $k ] = $v;
-
-			}
+			$clean[ $k ] = $this -> sanitize( $v );
 	
 		}
 

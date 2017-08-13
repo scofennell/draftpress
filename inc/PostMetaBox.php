@@ -150,24 +150,11 @@ class PostMetaBox {
 
 					// Grab the value for this setting.
 					$value = FALSE;
-					if( isset( $setting['value_cb'] ) ) {
-						$value = call_user_func( $setting['value_cb'] );
-					} else {
-						if( isset( $values[ $section_id ] ) ) {
-							if( isset( $values[ $section_id ][ $setting_id ] ) ) {
-								$value = $values[ $section_id ][ $setting_id ];
+					
+					$value_key = "$section_id-$setting_id";
 
-								if( is_scalar( $value ) ) {
-
-									$value = esc_attr( $value );
-
-								} elseif( is_array( $value ) ) {
-
-									$value = $this -> recursive_sanitize( $value, 'esc_attr' );
-
-								}
-							}
-						}
+					if( isset( $values[ $value_key ] ) ) {
+						$value = $values[ $value_key ];;
 					}
 
 					if( empty( $value ) ) { 
@@ -241,19 +228,19 @@ class PostMetaBox {
 		$id = DRAFTPRESS . '-' . $section_id . '-' . $setting_id;
 
 		// Name the setting so it will be saved as an array.
-		$name = DRAFTPRESS . '[' . $section_id . ']' .  '[' . $setting_id . ']';
+		$name = DRAFTPRESS . '[' . $section_id . '-' . $setting_id . ']';
 
 		// The type of input.
 		$type = $setting['type'];
 		
-		if( $type == 'checkbox_group' ) {
+		if( $type == 'checkboxes' ) {
 
 			$fields     = new Fields( $value, $id, $name );
 			$checkboxes = $fields -> get_array_as_checkboxes( $setting['choices'] );
 
 			// Wrap the input.
 			$input = "
-				<div>$setting_label</div>
+				<div>$value $setting_label</div>
 				$checkboxes
 			";
 
@@ -264,18 +251,18 @@ class PostMetaBox {
 
 			// Wrap the input.
 			$input = "
-				<div>$setting_label</div>
+				<div>$value $setting_label</div>
 				$radios
 			";
 
 		} elseif( $type == 'checkbox' ) {
 
-			$checked = checked( $value, $current_value, FALSE );
+			$checked = checked( $value, 1, FALSE );
 
 			// Wrap the input.
 			$input = "
 				<div>
-					<input $checked type='$type' id='$id' name='$name' value='$value'>
+					<input $checked type='$type' id='$id' name='$name' value='1'>
 					<label for='$id'>$setting_label</label>
 				</div>
 			";
@@ -365,10 +352,10 @@ class PostMetaBox {
 
 		$old_values = $this -> post_meta_fields -> get_values( $post_id );
 
-		// Grab and sanitize the data.
+		// Grab and clean the data.
 		$posted_data = $_POST[ DRAFTPRESS ];
+
 		$posted_data = $this -> sanitize( $posted_data );
-		
 		$this -> update_meta( $post_id, $posted_data );
 
 		return $post_id;
@@ -383,19 +370,14 @@ class PostMetaBox {
 
 		$sections = $field[ 'sections' ];
 
-		var_dump( $posted_data );
-
 		foreach( $sections as $section_id => $section ) {
 
 			$settings = $section['settings'];
 
-			$i = 0;
-
 			foreach( $settings as $setting_id => $setting ) {
 
-				$i++;
+				$value = $posted_data[ "$section_id-$setting_id" ];
 
-				$value = $posted_data[ $section_id ][ $setting_id ];
 				update_post_meta( $post_id, "$section_id-$setting_id", $value );
 
 			}

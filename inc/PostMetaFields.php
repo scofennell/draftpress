@@ -47,10 +47,10 @@ class PostMetaFields {
 				'sections' => array(
 
 					// A section.
-					'meta' => array(
+					'bio' => array(
 
 						// The label for this section.
-						'label' => esc_html__( 'Meta for This Player', 'dp' ),
+						'label' => esc_html__( 'Biographical Data for This Player', 'dp' ),
 
 						// The settings for this section.
 						'settings' => array(
@@ -60,14 +60,61 @@ class PostMetaFields {
 								'label'       => esc_html__( 'Team', 'dp' ),
 								'description' => esc_html__( 'The NFL team for which this player plays.', 'dp' ),
 								'choices'     => array( 'Teams', 'get_as_kv' ),
-							),	
+							),								
 
-							'position' => array(
-								'type'        => 'checkbox_group',
-								'label'       => esc_html__( 'Position', 'dp' ),
-								'description' => esc_html__( 'The positions this player plays.', 'dp' ),
-								'choices'     => array( 'Positions', 'get_as_kv' ),
-							),									
+						),
+
+					),
+
+					'roster'  => array(
+
+						// The label for this section.
+						'label' => esc_html__( 'Roster Data for This Player', 'dp' ),
+
+						// The settings for this section.
+						'settings' => array(
+
+							'd' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Defense', 'dp' ),
+								'description' => esc_html__( 'Is this player a Defense?', 'dp' ),
+							),								
+
+							'dst' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'D/ST', 'dp' ),
+								'description' => esc_html__( 'Is this player a D/ST?', 'dp' ),
+							),								
+
+							'k' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Kicker', 'dp' ),
+								'description' => esc_html__( 'Is this player a Kicker?', 'dp' ),
+							),								
+
+							'qb' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Defense', 'dp' ),
+								'description' => esc_html__( 'Is this player a Quarterback?', 'dp' ),
+							),								
+
+							'rb' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Runningback', 'dp' ),
+								'description' => esc_html__( 'Is this player a Runningback?', 'dp' ),
+							),								
+
+							'wr' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Wide Receiver', 'dp' ),
+								'description' => esc_html__( 'Is this player a Wide Receiver?', 'dp' ),
+							),								
+
+							'te' => array(
+								'type'        => 'checkbox',
+								'label'       => esc_html__( 'Tight End', 'dp' ),
+								'description' => esc_html__( 'Is this player a Tight End?', 'dp' ),
+							),
 
 						),
 
@@ -91,7 +138,16 @@ class PostMetaFields {
 	 */
 	function get_values( $post_id ) {
 
-		$out = get_post_meta( $post_id, FALSE, TRUE );
+		$out = array();
+
+		$get_post_meta = get_post_meta( $post_id, FALSE, TRUE );
+
+		foreach( $get_post_meta as $k => $v ) {
+
+			if( count( $v == 1 ) ) 
+			$out[ $k ] = $v[ 0 ]; 
+
+		}
 
 		return $out;
 
@@ -107,23 +163,9 @@ class PostMetaFields {
 	 */ 
 	function get_value( $post_id, $section_id, $setting_id ) {
 
-		$values = $this -> get_values( $post_id );
-
-		if( isset( $values[ $section_id ] ) ) {
-
-			if( isset( $values[ $section_id ][ $setting_id ] ) ) {
-
-				if( ! empty( $values[ $section_id ][ $setting_id ] ) ) {
-
-					return $values[ $section_id ][ $setting_id ];
-
-				}
-
-			}
-
-		}
-
-		return FALSE;
+		$post = get_post( $post_id );
+		$key = "$section_id-$setting_id";
+		return $post -> $key;
 
 	}
 

@@ -16,103 +16,103 @@ class Teams {
 
 		$out = array(
 		
-			'ARI' => array(
+			'ari' => array(
 				'label' => esc_html__( 'Arizona Cardinals', 'dp' ),
 			),
-			'ATL' => array(
+			'atl' => array(
 				'label' => esc_html__( 'Atlanta Falcons', 'dp' ),
 			),	
-			'BAL' => array(
+			'bal' => array(
 				'label' => esc_html__( 'Baltimore Ravens', 'dp' ),
 			),
-			'BUF' => array(
+			'buf' => array(
 				'label' => esc_html__( 'Buffalo Bills', 'dp' ),
 			),	
-			'CAR' => array(
+			'car' => array(
 				'label' => esc_html__( 'Carolina Panthers', 'dp' ),
 			),	
-			'CHI' => array(
+			'chi' => array(
 				'label' => esc_html__( 'Chicago Bears', 'dp' ),
 			),	
-			'CIN' => array(
+			'cin' => array(
 				'label' => esc_html__( 'Cincinnati Bengals', 'dp' ),
 			),	
-			'CLE' => array(
+			'cle' => array(
 				'label' => esc_html__( 'Cleveland Browns', 'dp' ),
 			),
-			'DAL' => array(
+			'dal' => array(
 				'label' => esc_html__( 'Dallas Cowboys', 'dp' ),
 			),
-			'DEN' => array(
+			'den' => array(
 				'label' => esc_html__( 'Denver Broncos', 'dp' ),
 			),
-			'DET' => array(
+			'det' => array(
 				'label' => esc_html__( 'Detroit Lions', 'dp' ),
 			),	
-			'GB' => array(
+			'gb' => array(
 				'label' => esc_html__( 'Green Bay Packers', 'dp' ),
 			),
-			'HOU' => array(
+			'hou' => array(
 				'label' => esc_html__( 'Houston Texans', 'dp' ),
 			),	
-			'IND' => array(
+			'ind' => array(
 				'label' => esc_html__( 'Indianapolis Colts', 'dp' ),
 			),	
-			'JAC' => array(
+			'jac' => array(
 				'label' => esc_html__( 'Jacksonville Jaguars', 'dp' ),
 			),	
-			'KC' => array(
+			'kc' => array(
 				'label' => esc_html__( 'Kansas City Chiefs', 'dp' ),
 			),
-			'LAC' => array(
+			'lac' => array(
 				'label' => esc_html__( 'Los Angeles Chargers', 'dp' ),
 			),	
-			'LAR' => array(
+			'lar' => array(
 				'label' => esc_html__( 'Los Angeles Rams', 'dp' ),
 			),	
-			'MIA' => array(
+			'mia' => array(
 				'label' => esc_html__( 'Miami Dolphins', 'dp' ),
 			),	
-			'MIN' => array(
+			'min' => array(
 				'label' => esc_html__( 'Minnesota Vikings', 'dp' ),
 			),	
-			'NWE' => array(
+			'ne' => array(
 				'label' => esc_html__( 'New England Patriots', 'dp' ),
 			),	
-			'NOR' => array(
+			'no' => array(
 				'label' => esc_html__( 'New Orleans Saints', 'dp' ),
 			),	
-			'NYG' => array(
+			'nyg' => array(
 				'label' => esc_html__( 'New York Giants', 'dp' ),
 			),	
-			'NYJ' => array(
+			'nyj' => array(
 				'label' => esc_html__( 'New York Jets', 'dp' ),
 			),	
-			'OAK' => array(
+			'oak' => array(
 				'label' => esc_html__( 'Oakland Raiders', 'dp' ),
 			),	
-			'PHI' => array(
+			'phi' => array(
 				'label' => esc_html__( 'Philadelphia Eagles', 'dp' ),
 			),	
-			'PIT' => array(
+			'pit' => array(
 				'label' => esc_html__( 'Pittsburgh Steelers', 'dp' ),
 			),	
-			'SD' => array(
+			'sd' => array(
 				'label' => esc_html__( 'San Diego Chargers', 'dp' ),
 			),	
-			'SEA' => array(
+			'sea' => array(
 				'label' => esc_html__( 'Seattle Seahawks', 'dp' ),
 			),	
-			'SF' => array(
+			'sf' => array(
 				'label' => esc_html__( 'San Francisco 49ers', 'dp' ),
 			),
-			'TB' => array(
+			'tb' => array(
 				'label' => esc_html__( 'Tampa Bay Buccaneers', 'dp' ),
 			),	
-			'TEN' => array(
+			'ten' => array(
 				'label' => esc_html__( 'Tennessee Titans', 'dp' ),
 			),	
-			'WAS' => array(
+			'was' => array(
 				'label' => esc_html__( 'Washington Redskins', 'dp' ),
 			),	
 
