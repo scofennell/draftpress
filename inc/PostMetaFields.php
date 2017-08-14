@@ -38,7 +38,7 @@ class PostMetaFields {
 		$out = array(
 
 			// A post type.
-			'players' => array(
+			'player' => array(
 
 				// The label for this post type.
 				'label' => esc_html__( 'Player Data', 'dp' ),
@@ -55,12 +55,22 @@ class PostMetaFields {
 						// The settings for this section.
 						'settings' => array(
 
+							'first_name' => array(
+								'label'       => esc_html__( 'First Name', 'dp' ),
+								'description' => esc_html__( 'The first name of this player.', 'dp' ),
+							),
+
+							'last_name' => array(
+								'label'       => esc_html__( 'Last Name', 'dp' ),
+								'description' => esc_html__( 'The last name of this player.', 'dp' ),
+							),							
+
 							'team' => array(
 								'type'        => 'radio',
 								'label'       => esc_html__( 'Team', 'dp' ),
 								'description' => esc_html__( 'The NFL team for which this player plays.', 'dp' ),
 								'choices'     => array( 'Teams', 'get_as_kv' ),
-							),								
+							),												
 
 						),
 

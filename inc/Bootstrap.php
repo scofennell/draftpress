@@ -26,7 +26,7 @@ class Bootstrap {
 
 		$draftpress -> meta                  = new Meta;
 		$draftpress -> post_meta_fields      = new PostMetaFields;				
-		
+
 		$draftpress -> post_meta_box         = new PostMetaBox;
 		$draftpress -> post_types            = new PostTypes;
 		$draftpress -> subsite_settings      = new SubsiteSettings;

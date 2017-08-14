@@ -29,7 +29,7 @@ class PostTypes {
 		$out = array(
 
 			// The ID for this post type.
-			'players' => array(
+			'player' => array(
 				
 				'labels'             => array(
 					'name'               => _x( 'Players', 'post type general name', 'dp' ),

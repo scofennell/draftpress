@@ -22,12 +22,44 @@ class PostMetaBox {
 		$this -> post_meta_fields = get_dp() -> post_meta_fields;
 		$this -> meta_fields      = $this -> post_meta_fields -> get_fields();
 		
+		add_filter( 'title_edit_pre', array( $this, 'title_edit_pre' ), 10, 2 );
+
+		add_filter( 'wp_insert_post_data' , array( $this, 'wp_insert_post_data' ), 99, 2 );
+
 		// Add our meta boxes.
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		
 		// Handle the saving of our meta boxes.
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 3 );
 
+	}
+
+	function title_edit_pre( $title, $post_id ) {
+
+		$post = get_post( $post_id );
+
+		if( $post -> post_type != 'player' ) { return $title; }
+
+		$last_name  = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'last_name' );
+		$first_name = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'first_name' );
+
+		$out = sprintf( esc_attr__( '%s, %s', 'dp' ), $last_name, $first_name );
+
+		return $out;
+
+	}
+
+	function wp_insert_post_data( $data, $post ) {
+
+		if( $post -> post_type != 'player' ) { return $data; }
+
+		$last_name  = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'last_name' );
+		$first_name = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'first_name' );
+
+		$post_title = sprintf( esc_attr__( '%s, %s', 'dp' ), $last_name, $first_name );
+
+		$data['post_title'] = $post_title;
+		return $data;
 	}
 
 	/**
@@ -231,8 +263,11 @@ class PostMetaBox {
 		$name = DRAFTPRESS . '[' . $section_id . '-' . $setting_id . ']';
 
 		// The type of input.
-		$type = $setting['type'];
-		
+		$type = 'text';
+		if( isset( $setting['type'] ) ) {
+			$type = esc_attr( $setting['type'] );
+		}
+
 		if( $type == 'checkboxes' ) {
 
 			$fields     = new Fields( $value, $id, $name );
