@@ -51,6 +51,8 @@ class PostMetaBox {
 
 	function wp_insert_post_data( $data, $post ) {
 
+		if( ! is_object( $post ) ) { return $data; }
+
 		if( $post -> post_type != 'player' ) { return $data; }
 
 		$last_name  = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'last_name' );

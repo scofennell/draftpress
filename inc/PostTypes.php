@@ -62,7 +62,43 @@ class PostTypes {
 				//'taxonomies'         => array( 'category' ),
 				'menu_icon'          => 'dashicons-groups',
 
-			),			
+			),
+
+			// The ID for this post type.
+			'ranking' => array(
+				
+				'labels'             => array(
+					'name'               => _x( 'Rankings', 'post type general name', 'dp' ),
+					'singular_name'      => _x( 'Rankings', 'post type singular name', 'dp' ),
+					'menu_name'          => _x( 'Rankings', 'admin menu', 'dp' ),
+					'name_admin_bar'     => _x( 'Rankings', 'add new on admin bar', 'dp' ),
+					'add_new'            => _x( 'Add New', 'player', 'dp' ),
+					'add_new_item'       => __( 'Add New Rankings', 'dp' ),
+					'new_item'           => __( 'New Rankings', 'dp' ),
+					'edit_item'          => __( 'Edit Rankings', 'dp' ),
+					'view_item'          => __( 'View Rankings', 'dp' ),
+					'all_items'          => __( 'All Rankings', 'dp' ),
+					'search_items'       => __( 'Search Rankings', 'dp' ),
+					'parent_item_colon'  => __( 'Parent Rankings:', 'dp' ),
+					'not_found'          => __( 'No rankings found.', 'dp' ),
+					'not_found_in_trash' => __( 'No rankings found in Trash.', 'dp' ),
+				),
+				'description'        => __( 'Rankings.', 'dp' ),
+				'public'             => FALSE,
+				'publicly_queryable' => FALSE,
+				'show_ui'            => TRUE,
+				'show_in_menu'       => TRUE,
+				'query_var'          => FALSE,
+				'rewrite'            => FALSE,
+				'capability_type'    => 'post',
+				'has_archive'        => FALSE,
+				'hierarchical'       => FALSE,
+				'menu_position'      => TRUE,
+				'supports'           => array( 'title', 'thumbnail', 'editor', 'custom-fields' ),
+				//'taxonomies'         => array( 'category' ),
+				'menu_icon'          => 'dashicons-chart-bar',
+
+			),						
 
 		);
 

@@ -132,7 +132,40 @@ class PostMetaFields {
 
 				),
 
-			),				
+			),
+
+			// A post type.
+			'ranking' => array(
+
+				// The label for this post type.
+				'label' => esc_html__( 'Ranking Data', 'dp' ),
+
+				// The sections for this post type.
+				'sections' => array(
+
+					// A section.
+					'players' => array(
+
+						// The label for this section.
+						'label' => esc_html__( 'Player Rankings', 'dp' ),
+
+						// The settings for this section.
+						'settings' => array(
+
+							'order' => array(
+								'label'       => esc_html__( 'Order', 'dp' ),
+								'type'        => 'draggable',
+								'description' => esc_html__( 'The order in which players are ranked.', 'dp' ),
+								'items'       => array( 'Players', 'get_as_kv' ),
+							),											
+
+						),
+
+					),
+
+				),
+
+			),							
 
 		);
 
