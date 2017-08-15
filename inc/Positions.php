@@ -16,25 +16,25 @@ class Positions {
 
 		$out = array(
 		
-			'D' => array(
+			'd' => array(
 				'label' => esc_html__( 'Defense', 'dp' ),
 			),
-			'DST' => array(
+			'dst' => array(
 				'label' => esc_html__( 'Defense/Special Teams', 'dp' ),
 			),
-			'K' => array(
+			'k' => array(
 				'label' => esc_html__( 'Kicker', 'dp' ),
 			),	
-			'QB' => array(
+			'qb' => array(
 				'label' => esc_html__( 'Quarterback', 'dp' ),
 			),	
-			'RB' => array(
+			'rb' => array(
 				'label' => esc_html__( 'Runningback', 'dp' ),
 			),	
-			'TE' => array(
+			'te' => array(
 				'label' => esc_html__( 'Tight End', 'dp' ),
 			),
-			'WR' => array(
+			'wr' => array(
 				'label' => esc_html__( 'Wide Receiver', 'dp' ),
 			),	
 

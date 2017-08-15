@@ -24,7 +24,8 @@ class PostMetaBox {
 		
 		add_filter( 'title_edit_pre', array( $this, 'title_edit_pre' ), 10, 2 );
 
-		add_filter( 'wp_insert_post_data' , array( $this, 'wp_insert_post_data' ), 99, 2 );
+		add_filter( 'wp_insert_post_data' , array( $this, 'wp_insert_post_data' ), 999, 2 );
+		add_filter( 'wp_insert_post_data' , array( $this, 'wp_insert_post_data' ), 1, 2 );
 
 		// Add our meta boxes.
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
@@ -51,16 +52,35 @@ class PostMetaBox {
 
 	function wp_insert_post_data( $data, $post ) {
 
-		if( ! is_object( $post ) ) { return $data; }
+		if( is_object( $post ) ) {
+			
+			if( $post -> post_type != 'player' ) { return $data; }
 
-		if( $post -> post_type != 'player' ) { return $data; }
+			$post_id = $post -> ID;
 
-		$last_name  = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'last_name' );
-		$first_name = $this -> post_meta_fields -> get_value( $post_id, 'bio', 'first_name' );
+		} elseif( is_array( $post ) ) {
+		
+			if( $post['post_type'] != 'player' ) { return $data; }
+		
+			$post_id = $post['ID'];
 
+		} else {
+		
+			return $data;
+		
+		}
+
+		if( ! isset( $post[ DRAFTPRESS ] ) ) {
+			return $data;
+		}
+
+		$last_name  = $post[ DRAFTPRESS ]['bio-last_name'];
+		$first_name = $post[ DRAFTPRESS ]['bio-first_name'];
+			
 		$post_title = sprintf( esc_attr__( '%s, %s', 'dp' ), $last_name, $first_name );
 
 		$data['post_title'] = $post_title;
+
 		return $data;
 	}
 
@@ -335,7 +355,10 @@ class PostMetaBox {
 						$items_method = $items[1];
 						$items_obj = new $items_class;
 						$items_arr = call_user_func( array( $items_obj, $items_method ) );
-							
+						
+						//==========
+						//http://jsfiddle.net/jomanlk/KeAer/2/
+
 						$draggable = $fields -> get_draggable( $items_arr );
 
 					}

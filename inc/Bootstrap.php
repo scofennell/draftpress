@@ -25,6 +25,7 @@ class Bootstrap {
 		global $draftpress;
 
 		$draftpress -> meta                  = new Meta;
+		$draftpress -> enqueue               = new Enqueue;
 		$draftpress -> post_meta_fields      = new PostMetaFields;				
 
 		$draftpress -> post_meta_box         = new PostMetaBox;

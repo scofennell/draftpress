@@ -104,7 +104,7 @@ class PostMetaFields {
 
 							'qb' => array(
 								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Defense', 'dp' ),
+								'label'       => esc_html__( 'Quarterback', 'dp' ),
 								'description' => esc_html__( 'Is this player a Quarterback?', 'dp' ),
 							),								
 
@@ -208,6 +208,9 @@ class PostMetaFields {
 
 		$post = get_post( $post_id );
 		$key = "$section_id-$setting_id";
+
+		if( ! isset( $post -> $key ) ) { return FALSE; }
+
 		return $post -> $key;
 
 	}
