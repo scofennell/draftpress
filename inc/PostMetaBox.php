@@ -316,6 +316,41 @@ class PostMetaBox {
 				<textarea class='widefat' id='$id' name='$name'>$value</textarea>
 			";
 
+		} elseif( $type == 'draggable' ) {
+
+			$value = esc_attr( $value );
+
+			$fields = new Fields( $value, $id, $name );
+
+			$items = $setting['items'];
+			$draggable = '';
+			if( is_array( $items ) ) {
+				$count = count( $items );
+				if( $count == 2 ) {
+
+					$items_class = __NAMESPACE__ . '\\' . $items[0];
+
+					if( class_exists( $items_class ) ) {
+						
+						$items_method = $items[1];
+						$items_obj = new $items_class;
+						$items_arr = call_user_func( array( $items_obj, $items_method ) );
+							
+						$draggable = $fields -> get_draggable( $items_arr );
+
+					}
+				}
+			}
+
+			// Wrap the input.
+			$input = "
+				<div>
+					<label for='$id'>$setting_label</label>
+				</div>
+				$draggable
+				<input class='widefat' id='$id' name='$name'>
+			";
+
 		} else {
 
 			// Wrap the input.

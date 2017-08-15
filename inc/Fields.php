@@ -86,4 +86,16 @@ class Fields {
 
 	}
 
+	function get_draggable( $items ) {
+
+		$out = '';
+
+		foreach( $items as $k => $v ) {
+			$out .= "<div>$k $v</div>";
+		}
+
+		return $out;
+
+	}
+
 }
