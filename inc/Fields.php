@@ -94,10 +94,12 @@ class Fields {
 
 		$out = '';
 
+		$id   = $this -> id;
+
 		foreach( $items as $k => $v ) {
 			$k = esc_attr( $k );
 			$v = esc_html( $v );
-			$out .= "<li id='item_$k'>$k $v</li>";
+			$out .= "<li id='$id-$k'>$k $v</li>";
 		}
 
 		if( ! empty( $out ) ) {

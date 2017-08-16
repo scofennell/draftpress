@@ -62,7 +62,7 @@ jQuery( document ).ready( function( $ ) {
 				containment: that,
 				scroll: false,
 				change: function( event, ui ) {
-					var sorted = $( that ).sortable( "toArray" );
+					var sorted = $( that ).sortable( 'toArray' );
 					$( dataHolder ).val( sorted );
 				}
 			});
