@@ -62,8 +62,8 @@ jQuery( document ).ready( function( $ ) {
 				containment: that,
 				scroll: false,
 				change: function( event, ui ) {
-					console.log( 63, event, ui );
-					$( dataHolder ).val( event );
+					var sorted = $( that ).sortable( "toArray" );
+					$( dataHolder ).val( sorted );
 				}
 			});
 		    $( that ).disableSelection();
