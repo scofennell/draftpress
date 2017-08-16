@@ -95,7 +95,9 @@ class Fields {
 		$out = '';
 
 		foreach( $items as $k => $v ) {
-			$out .= "<li>$k $v</li>";
+			$k = esc_attr( $k );
+			$v = esc_html( $v );
+			$out .= "<li id='$k'>$k $v</li>";
 		}
 
 		if( ! empty( $out ) ) {

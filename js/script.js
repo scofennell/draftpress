@@ -55,12 +55,15 @@ jQuery( document ).ready( function( $ ) {
 			// Save a reference to the input, so that we may safely use "this" later.
 			var that = this;
 
+			var dataHolder = $( that ).next( 'input' );
+
 			$( that ).sortable({
 				axis: 'y',
 				containment: that,
 				scroll: false,
 				change: function( event, ui ) {
-					console.log( 63, event, ui )
+					console.log( 63, event, ui );
+					$( dataHolder ).val( event );
 				}
 			});
 		    $( that ).disableSelection();
