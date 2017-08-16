@@ -27,10 +27,10 @@ class Enqueue {
 		if( ! is_admin() ) { return FALSE; }
 
 		wp_enqueue_style(
-			CM . '-' . __FUNCTION__,
-			CM_CSS_URL . 'admin_style.css',
+			DRAFTPRESS . '-' . __FUNCTION__,
+			DRAFTPRESS_URL . 'css/admin_style.css',
 			array(),
-			CM_VERSION,
+			DRAFTPRESS_VERSION,
 			'all'
 		);
 
@@ -41,10 +41,10 @@ class Enqueue {
 		if( is_admin() ) { return FALSE; }
 
 		wp_enqueue_style(
-			CM . '-' . __FUNCTION__,
-			CM_CSS_URL . 'style.css',
+			DRAFTPRESS . '-' . __FUNCTION__,
+			DRAFTPRESS_URL . 'css/style.css',
 			array(),
-			CM_VERSION,
+			DRAFTPRESS_VERSION,
 			'all'
 		);
 
@@ -53,10 +53,10 @@ class Enqueue {
 	public function script() {
 
 		wp_enqueue_script(
-			CM . '-' . __FUNCTION__,
-			CM_JS_URL . 'script.js',
+			DRAFTPRESS . '-' . __FUNCTION__,
+			DRAFTPRESS_URL . 'js/script.js',
 			array( 'jquery' ),
-			CM_VERSION,
+			DRAFTPRESS_VERSION,
 			FALSE
 		);
 

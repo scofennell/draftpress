@@ -88,10 +88,18 @@ class Fields {
 
 	function get_draggable( $items ) {
 
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		wp_enqueue_script( 'jquery-ui-sortable' );
+
 		$out = '';
 
 		foreach( $items as $k => $v ) {
-			$out .= "<div>$k $v</div>";
+			$out .= "<li>$k $v</li>";
+		}
+
+		if( ! empty( $out ) ) {
+			$out = "<ul class='$class'>$out</ul>";
 		}
 
 		return $out;
