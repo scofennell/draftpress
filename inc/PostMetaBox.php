@@ -354,11 +354,14 @@ class PostMetaBox {
 						
 						$items_method = $items[1];
 						$items_obj = new $items_class;
-						$items_arr = call_user_func( array( $items_obj, $items_method ) );
+						$order_arr = explode( ',', $value );
+						$order_clean = array();
+						foreach( $order_arr as $item ) {
+							$order_clean[ $item ] = NULL;
+						}
 						
-						//==========
-						//http://jsfiddle.net/jomanlk/KeAer/2/
-
+						$items_arr = call_user_func( array( $items_obj, $items_method ), $order_clean );
+						
 						$draggable = $fields -> get_draggable( $items_arr );
 
 					}
@@ -371,7 +374,6 @@ class PostMetaBox {
 					<label for='$id'>$setting_label</label>
 				</div>
 				$draggable
-				<input class='widefat' id='$id' name='$name'>
 			";
 
 		} else {

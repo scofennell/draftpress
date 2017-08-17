@@ -95,15 +95,20 @@ class Fields {
 		$out = '';
 
 		$id   = $this -> id;
+		$name = $this -> name;
+		$current_value = esc_attr( $this -> current_value );
 
 		foreach( $items as $k => $v ) {
 			$k = esc_attr( $k );
-			$v = esc_html( $v );
-			$out .= "<li id='$id-$k'>$k $v</li>";
+			$v = $v;
+			$out .= "<li class='$class-item' id='$id-$k'>$k $v</li>";
 		}
 
 		if( ! empty( $out ) ) {
-			$out = "<ul class='$class'>$out</ul>";
+			$out = "
+				<ul class='$class'>$out</ul>
+				<input class='$class-hidden widefat' type='' value='$current_value' id='$id' name='$name'>
+			";
 		}
 
 		return $out;

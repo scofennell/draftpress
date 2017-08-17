@@ -156,7 +156,7 @@ class PostMetaFields {
 								'label'       => esc_html__( 'Order', 'dp' ),
 								'type'        => 'draggable',
 								'description' => esc_html__( 'The order in which players are ranked.', 'dp' ),
-								'items'       => array( 'Players', 'get_as_kv' ),
+								'items'       => array( 'Players', 'get_as_draggable_items' ),
 							),											
 
 						),

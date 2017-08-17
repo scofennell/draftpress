@@ -12,6 +12,12 @@ namespace DraftPress;
 
 class Players {
 
+	public function __construct() {
+
+		$this -> post_meta_fields = get_dp() -> post_meta_fields;
+
+	}
+
 	function get() {
 
 		$args = array(
@@ -40,17 +46,39 @@ class Players {
 
 	}
 
-	function get_as_kv() {
+	function get_as_draggable_items( $order ) {
 
 		$arr = $this -> get();
 
-		$out = array();
+		$unordered = array();
 
 		foreach( $arr as $k => $v ) {
 
-			$out[ $k ] = $v -> post_title;
+			$player   = new Player( $k );
+			$name     = $player -> get_name();
+			$team     = $player -> get_team();
+			$position = $player -> get_position();
+
+
+			$name     = '<strong>' . $name     . '</strong>';
+			$team     = '<span>'   . $team     . '</span>';
+			$position = '<em>'     . $position . '</em>';
+			
+			$label = "<label>$name $team $position</label>";
+
+			$unordered[ $k ] = $label;
 
 		}
+
+		$ordered = array();
+		foreach( $order as $order_k => $null ) {
+
+			$ordered[ $order_k ] = $unordered[ $order_k ];
+			unset( $unordered[ $order_k ] );
+
+		}
+
+		$out = $ordered + $unordered;
 
 		return $out;
 
