@@ -1,4 +1,15 @@
 .DraftPressFields-get_draggable {
-
+	display: table;
 	table-layout: fixed;
+}
+
+.DraftPressFields-get_draggable-item {
+	display: table-row;
+	cursor: move;
+}
+
+.DraftPressFields-get_draggable-item > * {
+	display: table-cell;
+	padding: 5px;
+	border-bottom: 1px dotted #ccc;
 }

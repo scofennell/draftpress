@@ -42,15 +42,15 @@ class Player {
 
 		$out = array();
 
-		$positions['d']   = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'd' );
-		$positions['dst'] = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'dst' );
-		$positions['k']   = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'k' );
-		$positions['qb']  = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'qb' );
-		$positions['rb']  = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'rb' );
-		$positions['te']  = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'te' );
-		$positions['wr']  = $this -> post_meta_fields -> get_value( $this -> id, 'roster', 'wr' );		
+		$vals = array();
 
-		foreach( $positions as $k => $v ) {
+		$positions = new Positions;
+		$get_positions = $positions -> get();
+		foreach( $get_positions as $pos_k => $pos_v ) {
+			$vals[ $pos_k ] = $this -> post_meta_fields -> get_value( $this -> id, 'roster', $pos_k );
+		}
+
+		foreach( $vals as $k => $v ) {
 			if( $v ) {
 				$out[] = $k;
 			}

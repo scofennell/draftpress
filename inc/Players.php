@@ -64,7 +64,7 @@ class Players {
 			$team     = '<span>'   . $team     . '</span>';
 			$position = '<em>'     . $position . '</em>';
 			
-			$label = "<label>$name $team $position</label>";
+			$label = "$name $team $position";
 
 			$unordered[ $k ] = $label;
 

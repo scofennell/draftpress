@@ -101,12 +101,12 @@ class Fields {
 		foreach( $items as $k => $v ) {
 			$k = esc_attr( $k );
 			$v = $v;
-			$out .= "<li class='$class-item' id='$id-$k'>$k $v</li>";
+			$out .= "<div class='$class-item' id='$id-$k'>$v</div>";
 		}
 
 		if( ! empty( $out ) ) {
 			$out = "
-				<ul class='$class'>$out</ul>
+				<div class='$class'>$out</div>
 				<input class='$class-hidden widefat' type='' value='$current_value' id='$id' name='$name'>
 			";
 		}
