@@ -27,8 +27,10 @@ class Bootstrap {
 		$draftpress -> meta                  = new Meta;
 		$draftpress -> enqueue               = new Enqueue;
 		$draftpress -> post_meta_fields      = new PostMetaFields;				
+		$draftpress -> user_meta_fields      = new UserMetaFields;	
 
 		$draftpress -> post_meta_box         = new PostMetaBox;
+		$draftpress -> user_meta_box         = new UserMetaBox;
 		$draftpress -> post_types            = new PostTypes;
 		$draftpress -> subsite_settings      = new SubsiteSettings;
 		$draftpress -> subsite_control_panel = new SubsiteControlPanel;
