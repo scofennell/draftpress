@@ -37,29 +37,23 @@ class UserMetaFields {
 
 		$out = array(
 
-			// The sections for this post type.
-			'sections' => array(
+			// A section.
+			'rankings' => array(
 
-				// A section.
-				'rankings' => array(
+				// The label for this section.
+				'label' => esc_html__( 'Rankings Settings', 'dp' ),
 
-					// The label for this section.
-					'label' => esc_html__( 'Rankings Settings', 'dp' ),
+				// The settings for this section.
+				'settings' => array(
 
-					// The settings for this section.
-					'settings' => array(
-
-						'is_ranker' => array(
-							'label'       => esc_html__( 'Is a ranker?', 'dp' ),
-							'description' => esc_html__( 'Is this user a ranker?', 'dp' ),
-						),
-
+					'is_ranker' => array(
+						'label'       => esc_html__( 'Is a ranker?', 'dp' ),
+						'description' => esc_html__( 'Is this user a ranker?', 'dp' ),
 					),
 
 				),
 
 			),
-			
 
 		);
 
@@ -77,7 +71,9 @@ class UserMetaFields {
 
 		$out = array();
 
-		$get_user_meta = get_user_meta( $post_id, FALSE, TRUE );
+		$get_user_meta = get_user_meta( $user_id, FALSE, TRUE );
+
+		if( ! is_array( $get_user_meta ) ) { return FALSE; }
 
 		foreach( $get_user_meta as $k => $v ) {
 

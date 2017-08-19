@@ -91,6 +91,152 @@ trait Form {
 
 		return $out;
 
+	}
+
+	/**
+	 * Get an HTML input for a meta field.
+	 * 
+	 * @param  string $post_id    The post ID.
+	 * @param  string $value      The database value for this input.
+	 * @param  string $section_id The ID for the section that this setting is in.
+	 * @param  string $setting_id The ID for this setting.
+	 * @param  string $setting    The definition of this setting.
+	 * @return string             An HTML input for a meta field.
+	 */
+	function get_field( $post_id, $value, $section_id, $setting_id, $setting ) {
+
+		$out = '';
+
+		// The label for this setting.
+		$setting_label = $setting['label'];
+
+		// The description for this setting.
+		$setting_description = '';
+		if( isset( $setting['description'] ) ) {
+			$setting_description = '<p class="howto">' . $setting['description'] . '</p>';
+		}
+		
+		// Namespace the ID for this setting.
+		$id = DRAFTPRESS . '-' . $section_id . '-' . $setting_id;
+
+		// Name the setting so it will be saved as an array.
+		$name = DRAFTPRESS . '[' . $section_id . '-' . $setting_id . ']';
+
+		// The type of input.
+		$type = 'text';
+		if( isset( $setting['type'] ) ) {
+			$type = esc_attr( $setting['type'] );
+		}
+
+		if( $type == 'checkboxes' ) {
+
+			$fields     = new Fields( $value, $id, $name );
+			$checkboxes = $fields -> get_array_as_checkboxes( $setting['choices'] );
+
+			// Wrap the input.
+			$input = "
+				<div>$setting_label</div>
+				$checkboxes
+			";
+
+		} elseif( $type == 'radio' ) {
+
+			$fields = new Fields( $value, $id, $name );
+			$radios = $fields -> get_array_as_radios( $setting['choices'] );
+
+			// Wrap the input.
+			$input = "
+				<div>$setting_label</div>
+				$radios
+			";
+
+		} elseif( $type == 'checkbox' ) {
+
+			$checked = checked( $value, 1, FALSE );
+
+			// Wrap the input.
+			$input = "
+				<div>
+					<input $checked type='$type' id='$id' name='$name' value='1'>
+					<label for='$id'>$setting_label</label>
+				</div>
+			";
+
+		} elseif( $type == 'textarea' ) {
+
+			$value = esc_textarea( $value );
+
+			// Wrap the input.
+			$input = "
+				<div>
+					<label for='$id'>$setting_label</label>
+				</div>
+				<textarea class='widefat' id='$id' name='$name'>$value</textarea>
+			";
+
+		} elseif( $type == 'draggable' ) {
+
+			$value = esc_attr( $value );
+
+			$fields = new Fields( $value, $id, $name );
+
+			$items = $setting['items'];
+			$draggable = '';
+			if( is_array( $items ) ) {
+				$count = count( $items );
+				if( $count == 2 ) {
+
+					$items_class = __NAMESPACE__ . '\\' . $items[0];
+
+					if( class_exists( $items_class ) ) {
+						
+						$items_method = $items[1];
+						$items_obj = new $items_class;
+						$order_arr = explode( ',', $value );
+						$order_clean = array();
+						foreach( $order_arr as $item ) {
+							$order_clean[ $item ] = NULL;
+						}
+						
+						$items_arr = call_user_func( array( $items_obj, $items_method ), $order_clean );
+						
+						$draggable = $fields -> get_draggable( $items_arr );
+
+					}
+				}
+			}
+
+			// Wrap the input.
+			$input = "
+				<div>
+					<label for='$id'>$setting_label</label>
+				</div>
+				$draggable
+			";
+
+		} else {
+
+			// Wrap the input.
+			$input = "
+				<div>
+					<label for='$id'>$setting_label</label>
+				</div>
+				<input class='regular-text' type='$type' id='$id' name='$name' value='$value'>
+			";
+
+		}
+
+		$out = "
+
+			<div id='$id-wrap'>
+				$input
+				$setting_description
+			</div>
+
+		";
+
+		return $out;
+
 	}	
 
 }
