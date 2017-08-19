@@ -200,6 +200,35 @@ class PostMetaBox {
 				// Loop through the settings in this section.
 				$settings     = $section['settings'];
 				$settings_out = '';
+
+				if( isset( $settings['items_cb'] ) ) {
+
+					$type = $settings['type'];
+
+					$items_cb = $settings['items_cb'];
+
+					$items_cb_class  = __NAMESPACE__ . '\\' . $items_cb[0];
+					$items_cb_obj    = new $items_cb_class;
+					$items_cb_method = $items_cb[1];
+				
+					$cb_settings = call_user_func( array( $items_cb_obj, $items_cb_method ) );
+
+					$cb_settings_out = array();
+
+					foreach( $cb_settings as $setting_id => $setting ) {
+
+						//wp_die( var_dump( $setting_id, $setting ) );
+
+						$setting['type'] = $type;
+
+						$cb_settings_out[ $setting_id  ] = $setting;
+
+					}
+
+					$settings = $cb_settings_out;
+
+				}
+
 				foreach( $settings as $setting_id => $setting ) {
 
 					// Grab the value for this setting.
@@ -220,7 +249,7 @@ class PostMetaBox {
 					// Grab the input for this setting.
 					$settings_out .= $this -> get_field( $post_id, $value, $section_id, $setting_id, $setting );
 
-				}
+				}			
 
 				// Wrap this section.
 				$out .= "

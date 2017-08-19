@@ -84,47 +84,8 @@ class PostMetaFields {
 						// The settings for this section.
 						'settings' => array(
 
-							'd' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Defense', 'dp' ),
-								'description' => esc_html__( 'Is this player a Defense?', 'dp' ),
-							),								
-
-							'dst' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'D/ST', 'dp' ),
-								'description' => esc_html__( 'Is this player a D/ST?', 'dp' ),
-							),								
-
-							'k' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Kicker', 'dp' ),
-								'description' => esc_html__( 'Is this player a Kicker?', 'dp' ),
-							),								
-
-							'qb' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Quarterback', 'dp' ),
-								'description' => esc_html__( 'Is this player a Quarterback?', 'dp' ),
-							),								
-
-							'rb' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Runningback', 'dp' ),
-								'description' => esc_html__( 'Is this player a Runningback?', 'dp' ),
-							),								
-
-							'wr' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Wide Receiver', 'dp' ),
-								'description' => esc_html__( 'Is this player a Wide Receiver?', 'dp' ),
-							),								
-
-							'te' => array(
-								'type'        => 'checkbox',
-								'label'       => esc_html__( 'Tight End', 'dp' ),
-								'description' => esc_html__( 'Is this player a Tight End?', 'dp' ),
-							),
+							'items_cb' => array( 'Positions', 'get' ),
+							'type'     => 'checkbox',
 
 						),
 

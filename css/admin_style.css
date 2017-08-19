@@ -13,3 +13,18 @@
 	padding: 5px;
 	border-bottom: 1px dotted #ccc;
 }
+
+.DraftPressPostMetaBox-get_field-checkbox-wrapper > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.DraftPressFields-get_array_as_radios-item,
+.DraftPressPostMetaBox-get_field-checkbox {
+	margin-bottom: .5em;
+}
+
+.DraftPressFields-get_array_as_radios-item:last-child,
+.DraftPressPostMetaBox-get_field-checkbox:last-child {
+	margin-bottom: 0;
+}

@@ -107,6 +107,8 @@ trait Form {
 
 		$out = '';
 
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
 		// The label for this setting.
 		$setting_label = $setting['label'];
 
@@ -161,7 +163,7 @@ trait Form {
 
 			// Wrap the input.
 			$input = "
-				<div>
+				<div class='$class-$type-wrapper'>
 					<input $checked type='$type' id='$id' name='$name' value='1'>
 					$label
 				</div>
@@ -227,7 +229,7 @@ trait Form {
 
 		$out = "
 
-			<div id='$id-wrap'>
+			<div class='$class-$type $class' id='$id-wrap'>
 				$input
 				$setting_description
 			</div>

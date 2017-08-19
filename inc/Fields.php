@@ -54,6 +54,8 @@ class Fields {
 
 		$out = '';
 
+		$css_class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
 		$name = $this -> name;
 		$id   = $this -> id;
 
@@ -74,7 +76,7 @@ class Fields {
 			$v         = esc_html( $v );
 
 			$out .= "
-				<div>
+				<div class='$css_class-item'>
 					<input $checked id='$button_id' type='radio' value='$k' name='$name'>
 					<label for='$button_id'>$v</label>
 				</div>

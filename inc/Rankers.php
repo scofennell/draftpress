@@ -41,4 +41,22 @@ class Rankers {
 
 	}
 
+	function get_as_settings_array() {
+
+		$rankers = $this -> get();
+
+		$out = array();
+
+		foreach( $rankers as $user_id => $user ) {
+
+			$out[ $user_id ] = array(
+				'label' => esc_html( $user -> display_name ),
+			);
+
+		}
+
+		return $out;
+
+	}
+
 }
