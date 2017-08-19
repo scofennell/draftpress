@@ -26,13 +26,17 @@ class UserMetaBox {
 	
 	}
 
-	function show( $user_id ) {
+	function show( $user ) {
+
+		$user_id = $user -> ID;
 
 		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
 
 		$title = esc_html__( 'DraftPress Info', 'dp' );
 
 		$values = $this -> user_meta_fields -> get_values( $user_id );
+
+		//var_dump( $values, $user_id, get_user_meta( $user_id, FALSE, TRUE ) );
 
 		$sections     = $this -> user_meta_fields -> get_fields();
 		$settings_out = '';
@@ -49,6 +53,8 @@ class UserMetaBox {
 					
 				$value_key = "$section_id-$setting_id";
 
+				$id = DRAFTPRESS . '-' . $value_key;
+
 				if( isset( $values[ $value_key ] ) ) {
 					$value = $values[ $value_key ];
 				}
@@ -64,12 +70,12 @@ class UserMetaBox {
 				}
 
 				// Grab the input for this setting.
-				$td = $this -> get_field( $user_id, $value, $section_id, $setting_id, $setting );
+				$td = $this -> get_field( $user_id, $value, $section_id, $setting_id, $setting, FALSE );
 
 				$settings_out .= "
 					<tr>
 						<th>
-							<label>$th</label>
+							<label for='$id'>$th</label>
 						</th>
 						<td>$td</td>
 					</tr>
@@ -94,8 +100,42 @@ class UserMetaBox {
 
 	}
 
-	function update() {
+	function update( $user_id ) {
+
+		if( ! current_user_can( 'edit_user',$user_id ) ) { return FALSE; }
 		
+		if( ! isset( $_POST[ DRAFTPRESS ] ) ) {
+			$posted_data = array();
+		} else {
+			$posted_data = $_POST[ DRAFTPRESS ];
+		}
+
+		$sections     = $this -> user_meta_fields -> get_fields();
+		$settings_out = '';
+		foreach( $sections as $section_id => $section ) {
+
+			$settings = $section['settings'];
+
+			foreach( $settings as $setting_id => $setting ) {
+
+				$value_key = "$section_id-$setting_id";
+
+				if( ! isset( $posted_data[ $value_key ] ) ) {
+
+					$value = FALSE;
+
+				} else {
+
+					$value = $this -> sanitize( $posted_data[ $value_key ] );
+
+				}
+
+				update_user_meta( $user_id, $value_key, $value );
+
+			}
+
+		}
+
 	} 
 
 }

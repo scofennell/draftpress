@@ -103,7 +103,7 @@ trait Form {
 	 * @param  string $setting    The definition of this setting.
 	 * @return string             An HTML input for a meta field.
 	 */
-	function get_field( $post_id, $value, $section_id, $setting_id, $setting ) {
+	function get_field( $post_id, $value, $section_id, $setting_id, $setting, $use_label = TRUE ) {
 
 		$out = '';
 
@@ -121,6 +121,11 @@ trait Form {
 
 		// Name the setting so it will be saved as an array.
 		$name = DRAFTPRESS . '[' . $section_id . '-' . $setting_id . ']';
+
+		$label = '';
+		if( $use_label ) {
+			$label = "<div><label for='$id'>$setting_label</label></div>";
+		}
 
 		// The type of input.
 		$type = 'text';
@@ -158,7 +163,7 @@ trait Form {
 			$input = "
 				<div>
 					<input $checked type='$type' id='$id' name='$name' value='1'>
-					<label for='$id'>$setting_label</label>
+					$label
 				</div>
 			";
 
@@ -168,9 +173,7 @@ trait Form {
 
 			// Wrap the input.
 			$input = "
-				<div>
-					<label for='$id'>$setting_label</label>
-				</div>
+				$label
 				<textarea class='widefat' id='$id' name='$name'>$value</textarea>
 			";
 
@@ -208,9 +211,7 @@ trait Form {
 
 			// Wrap the input.
 			$input = "
-				<div>
-					<label for='$id'>$setting_label</label>
-				</div>
+				$label
 				$draggable
 			";
 
@@ -218,9 +219,7 @@ trait Form {
 
 			// Wrap the input.
 			$input = "
-				<div>
-					<label for='$id'>$setting_label</label>
-				</div>
+				$label
 				<input class='regular-text' type='$type' id='$id' name='$name' value='$value'>
 			";
 

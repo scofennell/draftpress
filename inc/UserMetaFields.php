@@ -49,6 +49,7 @@ class UserMetaFields {
 					'is_ranker' => array(
 						'label'       => esc_html__( 'Is a ranker?', 'dp' ),
 						'description' => esc_html__( 'Is this user a ranker?', 'dp' ),
+						'type'        => 'checkbox',
 					),
 
 				),
