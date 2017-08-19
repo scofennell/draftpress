@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Register our post meta fields.
+ * Register our array of post meta fields.
  *
  * @package WordPress
  * @subpackage DraftPress
