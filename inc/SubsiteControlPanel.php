@@ -117,12 +117,13 @@ class SubsiteControlPanel {
 
 				$handle_import_form 
 
-				<h2>$page_title</h2>
-
-				<form method='POST' action='options.php'>
-					$settings
-					<p>$submit</p>
-				</form>
+				<div class='$class-settings'>
+					<h1>$page_title</h1>
+					<form method='POST' action='options.php'>
+						$settings
+						<p>$submit</p>
+					</form>
+				</div>
 
 				<div class='$class-import'>
 					<h2>$import_title</h2>
@@ -356,7 +357,7 @@ class SubsiteControlPanel {
 
 		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
 
-		$nonce = wp_nonce_field( 'import', $class . '-nonce', TRUE, FALSE );
+		$nonce = wp_nonce_field( 'import', DRAFTPRESS . '-import-nonce', TRUE, FALSE );
 
 		$name = DRAFTPRESS . '-import';
 
@@ -381,9 +382,20 @@ class SubsiteControlPanel {
 
 		if( ! isset( $posted_data[ DRAFTPRESS . '-import' ] ) ) { return FALSE; }
 
-		check_admin_referer( 'import', __CLASS__ . '-get_import_form-nonce' );
+		check_admin_referer( 'import', DRAFTPRESS . '-import-nonce' );
 
-		return "hello";
+		$import  = new Import;
+		$results = $import -> get_results();
+
+		$out = "
+			<div class='notice is-dismissible updated'>
+				<p>
+				$results
+				</p>
+			</div>
+		";
+
+		return $out;
 		
 	}
 

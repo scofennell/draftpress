@@ -43,17 +43,17 @@ class SubsiteSettings {
 			// The array of settings for this section.
 			'settings' => array(
 
-	            // A setting.
+				  // A setting.
 				'league_id' => array(
 
 					// The user-facing label text for this setting.
-					'label'    => esc_html__( 'A Setting', 'draftpress' ),
+					'label'    => esc_html__( 'League ID', 'dp' ),
 					
 					// The type of form input.
-					'type'     => 'text',
+					'type'     => 'number',
 					
 					// Some notes for this setting.
-					'notes'    => esc_html__( 'Some notes.', 'draftpress' )
+					'notes'    => sprintf( esc_html__( 'Your league ID, found in the url for your league on espn.com.  For example, %s would be league ID 1234.', 'dp' ), '<strong>http://games.espn.com/ffl/leagueoffice?leagueId=1234</strong>')
 
 				// End this setting.
 				),	
