@@ -15,7 +15,7 @@ class SubsiteControlPanel {
 	function __construct() {
 
 		// Grab the array of settings.
-		$subsite_settings               = new SubsiteSettings;
+		$subsite_settings                = new SubsiteSettings;
 		$this -> subsite_settings_array  = $subsite_settings -> get_settings_array();
 		$this -> subsite_settings_values = $subsite_settings -> get_settings_values();
 		$this -> subsite_settings_slug   = $subsite_settings -> get_settings_slug();
@@ -23,6 +23,7 @@ class SubsiteControlPanel {
 		// Grab our plugin label.
 		$meta                 = new Meta;
 		$this -> plugin_label = $meta -> get_label();
+		$this -> parent_page  = $meta -> get_parent_page();		
 
 		// Add our menu item.
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -67,7 +68,7 @@ class SubsiteControlPanel {
 	 */
 	public function the_page() {
 
-		$out = $this -> get_page();
+		$out = $this -> get_page( $_POST );
 
 		echo $out;
 
@@ -78,13 +79,13 @@ class SubsiteControlPanel {
 	 * 
 	 * @return string The HTML output for our admin page.
 	 */
-	public function get_page() {
+	public function get_page( $posted_data ) {
 		
 		do_action( 'before_dp_settings' );
 
 		$out = '';
 
-		$report = $this -> get_report();
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
 
 		// Start an output buffer since some of these functions always echo.
 		ob_start();
@@ -104,17 +105,31 @@ class SubsiteControlPanel {
 		// Grab a page title.
 		$page_title = $this -> plugin_label;
 
+		$import_title    = esc_html__( 'Import Player Data', 'dp' );
+		$import_preamble = esc_html__( 'Import Player Data', 'dp' );
+		$get_import_form = $this -> get_import_form();
+
+		$handle_import_form = $this -> handle_import_form( $posted_data );
+
 		// Nice!  Time to build the page!
 		$out = "
 			<div class='wrap'>
-				<h2>$page_title</h2>
 
-				$report
+				$handle_import_form 
+
+				<h2>$page_title</h2>
 
 				<form method='POST' action='options.php'>
 					$settings
 					<p>$submit</p>
 				</form>
+
+				<div class='$class-import'>
+					<h2>$import_title</h2>
+					<p>$import_preamble</p>
+					$get_import_form
+				</div>
+
 			</div>
 		";
 
@@ -335,6 +350,41 @@ class SubsiteControlPanel {
 
 		return $out;
 
+	}
+
+	function get_import_form() {
+
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		$nonce = wp_nonce_field( 'import', $class . '-nonce', TRUE, FALSE );
+
+		$name = DRAFTPRESS . '-import';
+
+		$submit = get_submit_button( esc_attr( 'Overwrite Player Data', 'dp' ), FALSE, $name, TRUE );
+
+		$get_parent_page = $this -> parent_page;
+		$current_url     = get_admin_url( NULL, $get_parent_page );
+		$current_url     = add_query_arg( array( 'page' => $this -> subsite_settings_slug ), $current_url );
+
+		$out = "
+			<form action='$current_url' method='post'>
+				$nonce
+				$submit
+			</form>
+		";
+
+		return $out;
+
+	}
+
+	function handle_import_form( $posted_data ) {
+
+		if( ! isset( $posted_data[ DRAFTPRESS . '-import' ] ) ) { return FALSE; }
+
+		check_admin_referer( 'import', __CLASS__ . '-get_import_form-nonce' );
+
+		return "hello";
+		
 	}
 
 }

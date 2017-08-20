@@ -28,7 +28,7 @@ class Meta {
 	 */
 	function get_label() {
 	   
-        $label = 'Waiver Alert';
+        $label = 'DraftPress';
        
        return esc_html__( $label, 'draftpress' );
 	}
@@ -56,7 +56,7 @@ class Meta {
 	 * @return string The parent settings page for our plugin.
 	 */
 	function get_parent_page() {
-		return 'settings.php';
+		return 'admin.php';
 	}		
 
 }

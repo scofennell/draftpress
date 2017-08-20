@@ -47,13 +47,13 @@ class SubsiteSettings {
 				'league_id' => array(
 
 					// The user-facing label text for this setting.
-					'label'    => esc_html__( 'League ID', 'draftpress' ),
+					'label'    => esc_html__( 'A Setting', 'draftpress' ),
 					
 					// The type of form input.
 					'type'     => 'text',
 					
 					// Some notes for this setting.
-					'notes'    => sprintf( esc_html__( 'Your league ID, found in the url for your league on espn.com.  For example, %s', 'draftpress' ), '<strong>http://games.espn.com/ffl/leagueoffice?leagueId=1234</strong>')
+					'notes'    => esc_html__( 'Some notes.', 'draftpress' )
 
 				// End this setting.
 				),	

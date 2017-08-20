@@ -73,6 +73,8 @@ class Players {
 		$ordered = array();
 		foreach( $order as $order_k => $null ) {
 
+			if( ! isset( $unordered[ $order_k ] ) ) { continue; }
+
 			$ordered[ $order_k ] = $unordered[ $order_k ];
 			unset( $unordered[ $order_k ] );
 
