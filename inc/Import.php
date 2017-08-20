@@ -15,12 +15,24 @@ class Import {
 	public function __construct() {
 
 		$this -> subsite_settings = new SubsiteSettings;
-	
-		$this -> set_results();
 
 	}
 
-	function set_results() {
+	function get_remote_data() {
+
+		if( ! isset( $this -> remote_data ) ) { return FALSE; }
+
+		return $this -> remote_data;
+
+	}
+
+	function set_remote_data() {
+
+		$remote_data = get_option( sanitize_key( __CLASS__ ) );
+		if( ! empty( $remote_data ) ) {
+			$this -> remote_data = $remote_data;
+			return;
+		}
 
 		$per_page = 40;
 
@@ -44,7 +56,7 @@ class Import {
 		$rows_arr = array();
 		while( $page < $max_calls ) {
 
-			$start_index = $per_page * $i;
+			$start_index = $per_page * $page;
 
 			$url = remove_query_arg( 'startIndex', $url );
 			$url = add_query_arg( array( 'startIndex' => $start_index ), $url );
@@ -77,14 +89,30 @@ class Import {
 					$player_data = $cell -> textContent;
 
 					$player_data_arr = explode( ',', $player_data );
-					$name = $player_data_arr[0];
-					$meta = trim( $player_data_arr[1] );
+					
 
-					// Split by &nbsp; .
-					$meta_arr = explode( chr(0xC2).chr(0xA0), $meta );
+					if( ! isset( $player_data_arr[1] ) ) {
 
-					$team     = strtolower( $meta_arr[0] );
-					$position = strtolower( $meta_arr[1] );
+						$defense_arr = explode( ' ', $player_data_arr[0] );
+						$name     = $defense_arr[0] . ' dst';
+						$position = 'dst';
+						$team     = $name;
+
+					} else {
+					
+						$name = $player_data_arr[0];
+
+						$meta = trim( $player_data_arr[1] );
+			
+						// Split by &nbsp; .
+						$meta_arr = explode( chr(0xC2).chr(0xA0), $meta );
+
+						$team     = strtolower( $meta_arr[0] );
+						$position = strtolower( $meta_arr[1] );
+
+					}
+
+					$name = str_replace( '*', '', $name );
 
 					$rows_arr[] = array(
 						'name'     => $name,
@@ -109,13 +137,53 @@ class Import {
 
 		}
 
-		wp_die( var_dump( $rows_arr ) );
+		update_option( sanitize_key( __CLASS__ ), $rows_arr );
+
+		$this -> remote_data = $rows_arr;
 
 	}
 
-	function get_results() {
+	function set_crawl_results() {
 
-		return $this -> results;
+		$this -> crawl_results = array(
+			'crawled' => get_option( sanitize_key( __CLASS__ ) ),
+		);
+
+	}
+
+	function get_crawl_results() {
+
+		if( ! isset( $this -> crawl_results ) ) { return FALSE; }
+
+		return $this -> crawl_results;
+	
+	}
+
+	function set_post_results() {
+
+		$rows = get_option( sanitize_key( __CLASS__ ) );
+
+		foreach( $rows as $player ) {
+
+			$post_arr = array(
+				'post_status' => 'publish',
+				'post_type'   => 'player',
+				'post_title'  => esc_html( $player['name'] ),
+			);
+
+			$post_id = wp_insert_post( $post_arr );
+
+			wp_die( var_dump( $post_id ) );
+
+		}
+
+	}
+
+	function get_post_results() {
+
+		if( ! isset( $this -> post_results ) ) { return FALSE; }
+
+		return $this -> post_results;
 	
 	}
 

@@ -384,8 +384,13 @@ class SubsiteControlPanel {
 
 		check_admin_referer( 'import', DRAFTPRESS . '-import-nonce' );
 
-		$import  = new Import;
-		$results = $import -> get_results();
+		$import        = new Import;
+		$import       -> set_remote_data();
+		$import       -> set_crawl_results();
+		$crawl_results = json_encode( $import -> get_crawl_results() );
+
+		$import       -> set_post_results();
+		$post_results  = json_encode( $import -> get_post_results() );
 
 		$out = "
 			<div class='notice is-dismissible updated'>
