@@ -165,15 +165,28 @@ class Import {
 
 		foreach( $rows as $player ) {
 
+			$name_arr   = explode( ' ', $player['name'] );
+			$first_name = esc_html( $name_arr[0] );
+			unset( $name_arr[0] );
+			$last_name  = implode( ' ', $name_arr );
+			$comma_name = sprintf( esc_html__( '%s, %s', 'dp' ), $last_name, $first_name );
+			
+			$team     = esc_html( $player['team'] );
+			$position = esc_html( $player['position'] );
+
 			$post_arr = array(
 				'post_status' => 'publish',
 				'post_type'   => 'player',
-				'post_title'  => esc_html( $player['name'] ),
+				'post_title'  => $comma_name,
+				'meta_input'  => array(
+					'bio-first_name'      => $first_name,
+					'bio-last_name'       => $last_name,
+					'bio-team'            => $team,
+					'roster-' . $position => TRUE,
+				),
 			);
 
 			$post_id = wp_insert_post( $post_arr );
-
-			wp_die( var_dump( $post_id ) );
 
 		}
 
