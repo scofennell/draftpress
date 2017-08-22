@@ -18,13 +18,34 @@ class Players {
 
 	}
 
-	function get() {
+	function get( $positions = FALSE ) {
 
 		$args = array(
 			'post_type'      => 'player',
-			'posts_per_page' => 999,
-
+			'posts_per_page' => 9999,
 		);
+
+		if( is_string( $positions ) ) {
+			$positions = array( $positions );
+		}
+
+		if( is_array( $positions ) ) {
+
+			$meta_query = array();
+			foreach( $positions as $position ) {
+		
+				$meta_query[] = array(
+					'key'     => 'roster-' . $position ,
+					'value'   => 1,
+					'compare' => '=',
+				);
+			
+			}
+			$args['meta_query'] = $meta_query;
+
+		}
+
+		var_dump( $args );
 
 		$the_query = new \WP_Query( $args );
 
@@ -46,13 +67,25 @@ class Players {
 
 	}
 
-	function get_as_draggable_items( $order ) {
+	function get_rbs_as_draggable_items( $order ) {
 
-		$arr = $this -> get();
+		$players = $this -> get( 'rb' );
+
+		$out = $this -> get_as_draggable_items( $order, $players );
+
+		return $out;
+
+	}
+
+	function get_as_draggable_items( $order, $players = FALSE ) {
+
+		if( ! $players ) {
+			$players = $this -> get();
+		}
 
 		$unordered = array();
 
-		foreach( $arr as $k => $v ) {
+		foreach( $players as $k => $v ) {
 
 			$player   = new Player( $k );
 			$name     = $player -> get_name();

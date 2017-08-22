@@ -100,6 +100,8 @@ class Fields {
 		$name = $this -> name;
 		$current_value = esc_attr( $this -> current_value );
 
+		if( ! is_array( $items ) ) { return FALSE; }
+
 		foreach( $items as $k => $v ) {
 			$k = esc_attr( $k );
 			$v = $v;

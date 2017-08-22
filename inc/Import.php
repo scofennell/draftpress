@@ -40,7 +40,7 @@ class Import {
 
 		$base = 'http://games.espn.com/ffl/tools/projections';
 
-		$max_calls = 25;
+		$max_calls = 30;
 
 		$start_index = 0;
 
@@ -61,7 +61,7 @@ class Import {
 			$url = remove_query_arg( 'startIndex', $url );
 			$url = add_query_arg( array( 'startIndex' => $start_index ), $url );
 
-			$get = wp_remote_get( $url );
+			$get  = wp_remote_get( $url );
 			$body = $get['body'];
 
 			@$classname    = 'playerTableTable';
@@ -71,13 +71,12 @@ class Import {
 			@$table        = $xpath -> query( "//*[contains(@class, '$classname')]" );
 
 			$table = $table[0];
-
-			$html  = '';
 			$tbody = $table -> childNodes;
+
+			if( ! $tbody ) { break; }
 
 			foreach( $tbody as $row ) {
 
-				$cells_arr = array();
 				$cells     = $row -> childNodes;
 				$cell_html = '';
 				foreach( $cells as $cell ) {
@@ -123,11 +122,6 @@ class Import {
 					break;
 
 				}
-
-				/*$cell_count = count( $cells_arr );
-				if( empty( $cell_count ) ) { continue; }
-
-				$rows_arr []= $cells_arr;*/
 			
 			}
 
@@ -136,6 +130,8 @@ class Import {
 			$page++;
 
 		}
+
+		$rows_arr = array_reverse( $rows_arr, TRUE );
 
 		update_option( sanitize_key( __CLASS__ ), $rows_arr );
 
