@@ -20,6 +20,8 @@ class SubsiteControlPanel {
 		$this -> subsite_settings_values = $subsite_settings -> get_settings_values();
 		$this -> subsite_settings_slug   = $subsite_settings -> get_settings_slug();
 
+		$this -> import = new Import;
+
 		// Grab our plugin label.
 		$meta                 = new Meta;
 		$this -> plugin_label = $meta -> get_label();
@@ -105,16 +107,50 @@ class SubsiteControlPanel {
 		// Grab a page title.
 		$page_title = $this -> plugin_label;
 
-		$import_title    = esc_html__( 'Import Player Data', 'dp' );
-		$import_preamble = esc_html__( 'Import Player Data', 'dp' );
-		$get_import_form = $this -> get_import_form();
+		$crawl_title    = esc_html__( 'Crawl Player Data', 'dp' );
+		$crawl_preamble = esc_html__( 'Crawl Player Data', 'dp' );
+		$get_crawl_form  = $this -> get_crawl_form();
 
-		$handle_import_form = $this -> handle_import_form( $posted_data );
+
+		
+
+		$import  = $this -> import;
+		$players = $import -> get_crawl_results();
+
+		$player_count = 0;
+		if( $players['crawled'] ) {
+			$player_count = count( $players['crawled'] );
+		}
+
+		$handle_crawl_form  = $this -> handle_crawl_form( $posted_data );
+
+		$import_title       = '';
+		$import_preamble    = '';
+		$get_import_form    = '';
+		$handle_import_form = '';
+		if( ! empty( $player_count ) ) {
+			$import_title    = esc_html__( 'Import Player Data', 'dp' );
+			$import_preamble = sprintf( esc_html__( 'Import data for %d players.', 'dp' ), $player_count );
+			$get_import_form  = $this -> get_import_form();		
+			$handle_import_form = $this -> handle_import_form( $posted_data );
+
+			$import_form = "
+				<div class='$class-import'>
+					<h2>$import_title</h2>
+					<p>$import_preamble</p>
+					$get_import_form
+				</div>
+			";
+
+		}
+
+
 
 		// Nice!  Time to build the page!
 		$out = "
 			<div class='wrap'>
 
+				$handle_crawl_form 
 				$handle_import_form 
 
 				<div class='$class-settings'>
@@ -125,11 +161,13 @@ class SubsiteControlPanel {
 					</form>
 				</div>
 
-				<div class='$class-import'>
-					<h2>$import_title</h2>
-					<p>$import_preamble</p>
-					$get_import_form
+				<div class='$class-crawl'>
+					<h2>$crawl_title</h2>
+					<p>$crawl_preamble</p>
+					$get_crawl_form
 				</div>
+
+				$import_form			
 
 			</div>
 		";
@@ -353,7 +391,53 @@ class SubsiteControlPanel {
 
 	}
 
-	function get_import_form() {
+	function get_crawl_form() {
+
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		$nonce = wp_nonce_field( 'crawl', DRAFTPRESS . '-crawl-nonce', TRUE, FALSE );
+
+		$name = DRAFTPRESS . '-crawl';
+
+		$submit = get_submit_button( esc_attr( 'Crawl Player Data', 'dp' ), FALSE, $name, TRUE );
+
+		$get_parent_page = $this -> parent_page;
+		$current_url     = get_admin_url( NULL, $get_parent_page );
+		$current_url     = add_query_arg( array( 'page' => $this -> subsite_settings_slug ), $current_url );
+
+		$out = "
+			<form action='$current_url' method='post'>
+				$nonce
+				$submit
+			</form>
+		";
+
+		return $out;
+
+	}
+
+	function handle_crawl_form( $posted_data ) {
+
+		if( ! isset( $posted_data[ DRAFTPRESS . '-crawl' ] ) ) { return FALSE; }
+
+		check_admin_referer( 'crawl', DRAFTPRESS . '-crawl-nonce' );
+
+		$import  = $this -> import;
+		$results = json_encode( $import -> get_crawl_data() );
+
+		$out = "
+			<div class='notice is-dismissible updated'>
+				<p>
+				$results
+				</p>
+			</div>
+		";
+
+		return $out;
+		
+	}
+
+function get_import_form() {
 
 		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
 
@@ -361,7 +445,7 @@ class SubsiteControlPanel {
 
 		$name = DRAFTPRESS . '-import';
 
-		$submit = get_submit_button( esc_attr( 'Overwrite Player Data', 'dp' ), FALSE, $name, TRUE );
+		$submit = get_submit_button( esc_attr( 'Import Player Data', 'dp' ), FALSE, $name, TRUE );
 
 		$get_parent_page = $this -> parent_page;
 		$current_url     = get_admin_url( NULL, $get_parent_page );
@@ -384,13 +468,9 @@ class SubsiteControlPanel {
 
 		check_admin_referer( 'import', DRAFTPRESS . '-import-nonce' );
 
-		$import        = new Import;
-		$import       -> set_remote_data();
-		$import       -> set_crawl_results();
-		$crawl_results = json_encode( $import -> get_crawl_results() );
-
-		$import       -> set_post_results();
-		$post_results  = json_encode( $import -> get_post_results() );
+		$import         = $this -> import;
+		$import -> set_import_results();
+		$results = json_encode( $import -> get_import_results() );
 
 		$out = "
 			<div class='notice is-dismissible updated'>
@@ -402,6 +482,6 @@ class SubsiteControlPanel {
 
 		return $out;
 		
-	}
+	}	
 
 }

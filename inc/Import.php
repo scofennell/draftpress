@@ -14,23 +14,25 @@ class Import {
 
 	public function __construct() {
 
+		delete_option( sanitize_key( __CLASS__ ) );
+
 		$this -> subsite_settings = new SubsiteSettings;
 
 	}
 
-	function get_remote_data() {
+	function get_crawl_data() {
 
-		if( ! isset( $this -> remote_data ) ) { return FALSE; }
+		if( ! isset( $this -> crawl_data ) ) { $this -> set_crawl_data(); }
 
-		return $this -> remote_data;
+		return $this -> crawl_data;
 
 	}
 
-	function set_remote_data() {
+	function set_crawl_data() {
 
-		$remote_data = get_option( sanitize_key( __CLASS__ ) );
-		if( ! empty( $remote_data ) ) {
-			$this -> remote_data = $remote_data;
+		$crawl_data = get_option( sanitize_key( __CLASS__ ) );
+		if( ! empty( $crawl_data ) ) {
+			$this -> crawl_data = $crawl_data;
 			return;
 		}
 
@@ -135,7 +137,7 @@ class Import {
 
 		update_option( sanitize_key( __CLASS__ ), $rows_arr );
 
-		$this -> remote_data = $rows_arr;
+		$this -> crawl_data = $rows_arr;
 
 	}
 
@@ -149,13 +151,13 @@ class Import {
 
 	function get_crawl_results() {
 
-		if( ! isset( $this -> crawl_results ) ) { return FALSE; }
+		if( ! isset( $this -> crawl_results ) ) { $this -> set_crawl_results(); }
 
 		return $this -> crawl_results;
 	
 	}
 
-	function set_post_results() {
+	function set_import_results() {
 
 		$rows = get_option( sanitize_key( __CLASS__ ) );
 
@@ -188,11 +190,11 @@ class Import {
 
 	}
 
-	function get_post_results() {
+	function get_import_results() {
 
-		if( ! isset( $this -> post_results ) ) { return FALSE; }
+		if( ! isset( $this -> import_results ) ) { return FALSE; }
 
-		return $this -> post_results;
+		return $this -> import_results;
 	
 	}
 
