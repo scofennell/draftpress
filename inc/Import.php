@@ -118,7 +118,9 @@ class Import {
 
 					$name = str_replace( '*', '', $name );
 
-					$rows_arr[] = array(
+					$slug = sanitize_title_with_dashes( $name );
+
+					$rows_arr[ $slug ] = array(
 						'name'     => $name,
 						'position' => $position,
 						'team'     => $team,
@@ -164,7 +166,14 @@ class Import {
 
 		$rows = get_option( sanitize_key( __CLASS__ ) );
 
-		foreach( $rows as $player ) {
+		$out = array();
+
+		$max = 500;
+
+		$i = 0;
+		foreach( $rows as $slug => $player ) {
+
+			if( $i > $max ) { break; }
 
 			$name_arr   = explode( ' ', $player['name'] );
 			$first_name = esc_html( $name_arr[0] );
@@ -187,9 +196,23 @@ class Import {
 				),
 			);
 
-			$post_id = wp_insert_post( $post_arr );
+			$wp_insert_post = wp_insert_post( $post_arr );
+
+			if( is_int( $wp_insert_post ) ) {
+
+				$out[] = $wp_insert_post;
+
+				unset( $rows[ $slug ] );
+
+			}
+
+			$i++;
 
 		}
+
+		$this -> import_results = $out;
+
+		update_option( sanitize_key( __CLASS__ ), $rows );
 
 	}
 

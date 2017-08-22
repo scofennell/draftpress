@@ -450,7 +450,7 @@ function get_import_form() {
 
 		$name = DRAFTPRESS . '-import';
 
-		$submit = get_submit_button( esc_attr( 'Import Player Data', 'dp' ), 'primary', $name, TRUE );
+		$submit = get_submit_button( esc_attr( 'Import a Batch of Players', 'dp' ), 'primary', $name, TRUE );
 
 		$get_parent_page = $this -> parent_page;
 		$current_url     = get_admin_url( NULL, $get_parent_page );
