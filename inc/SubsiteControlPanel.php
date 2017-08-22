@@ -32,6 +32,10 @@ class SubsiteControlPanel {
 
 		// Register our settings.
 		add_action( 'admin_init', array( $this, 'register' ) );
+
+		add_action( 'admin_notices', array( $this, 'handle_import' ) );	
+		
+		add_action( 'admin_notices', array( $this, 'handle_crawl' ) );				
 		
 	}
 
@@ -107,9 +111,6 @@ class SubsiteControlPanel {
 		// Grab a page title.
 		$page_title = $this -> plugin_label;
 
-		$crawl_title    = esc_html__( 'Crawl Player Data', 'dp' );
-		$crawl_preamble = esc_html__( 'Crawl Player Data', 'dp' );
-		$get_crawl_form  = $this -> get_crawl_form();
 
 
 		
@@ -122,17 +123,27 @@ class SubsiteControlPanel {
 			$player_count = count( $players['crawled'] );
 		}
 
-		$handle_crawl_form  = $this -> handle_crawl_form( $posted_data );
+		$crawl_form  = '';
+		$import_form = '';
+		if( empty( $player_count ) ) {
 
-		$import_title       = '';
-		$import_preamble    = '';
-		$get_import_form    = '';
-		$handle_import_form = '';
-		if( ! empty( $player_count ) ) {
+			$crawl_title    = esc_html__( 'Crawl Player Data', 'dp' );
+			$crawl_preamble = esc_html__( 'Crawl Player Data', 'dp' );
+			$get_crawl_form  = $this -> get_crawl_form();
+
+			$crawl_form = "
+				<div class='$class-crawl'>
+					<h2>$crawl_title</h2>
+					<p>$crawl_preamble</p>
+					$get_crawl_form
+				</div>	
+			";
+
+		} else {
+
 			$import_title    = esc_html__( 'Import Player Data', 'dp' );
 			$import_preamble = sprintf( esc_html__( 'Import data for %d players.', 'dp' ), $player_count );
 			$get_import_form  = $this -> get_import_form();		
-			$handle_import_form = $this -> handle_import_form( $posted_data );
 
 			$import_form = "
 				<div class='$class-import'>
@@ -150,9 +161,6 @@ class SubsiteControlPanel {
 		$out = "
 			<div class='wrap'>
 
-				$handle_crawl_form 
-				$handle_import_form 
-
 				<div class='$class-settings'>
 					<h1>$page_title</h1>
 					<form method='POST' action='options.php'>
@@ -161,13 +169,10 @@ class SubsiteControlPanel {
 					</form>
 				</div>
 
-				<div class='$class-crawl'>
-					<h2>$crawl_title</h2>
-					<p>$crawl_preamble</p>
-					$get_crawl_form
+				<div class='$class-import_forms'>
+					$crawl_form
+					$import_form			
 				</div>
-
-				$import_form			
 
 			</div>
 		";
@@ -399,7 +404,7 @@ class SubsiteControlPanel {
 
 		$name = DRAFTPRESS . '-crawl';
 
-		$submit = get_submit_button( esc_attr( 'Crawl Player Data', 'dp' ), FALSE, $name, TRUE );
+		$submit = get_submit_button( esc_attr( 'Crawl Player Data', 'dp' ), 'primary', $name, TRUE );
 
 		$get_parent_page = $this -> parent_page;
 		$current_url     = get_admin_url( NULL, $get_parent_page );
@@ -416,9 +421,9 @@ class SubsiteControlPanel {
 
 	}
 
-	function handle_crawl_form( $posted_data ) {
+	function handle_crawl() {
 
-		if( ! isset( $posted_data[ DRAFTPRESS . '-crawl' ] ) ) { return FALSE; }
+		if( ! isset( $_POST[ DRAFTPRESS . '-crawl' ] ) ) { return FALSE; }
 
 		check_admin_referer( 'crawl', DRAFTPRESS . '-crawl-nonce' );
 
@@ -433,7 +438,7 @@ class SubsiteControlPanel {
 			</div>
 		";
 
-		return $out;
+		echo $out;
 		
 	}
 
@@ -445,7 +450,7 @@ function get_import_form() {
 
 		$name = DRAFTPRESS . '-import';
 
-		$submit = get_submit_button( esc_attr( 'Import Player Data', 'dp' ), FALSE, $name, TRUE );
+		$submit = get_submit_button( esc_attr( 'Import Player Data', 'dp' ), 'primary', $name, TRUE );
 
 		$get_parent_page = $this -> parent_page;
 		$current_url     = get_admin_url( NULL, $get_parent_page );
@@ -462,9 +467,9 @@ function get_import_form() {
 
 	}
 
-	function handle_import_form( $posted_data ) {
+	function handle_import() {
 
-		if( ! isset( $posted_data[ DRAFTPRESS . '-import' ] ) ) { return FALSE; }
+		if( ! isset( $_POST[ DRAFTPRESS . '-import' ] ) ) { return FALSE; }
 
 		check_admin_referer( 'import', DRAFTPRESS . '-import-nonce' );
 
@@ -480,7 +485,7 @@ function get_import_form() {
 			</div>
 		";
 
-		return $out;
+		echo $out;
 		
 	}	
 

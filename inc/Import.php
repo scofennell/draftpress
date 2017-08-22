@@ -14,7 +14,7 @@ class Import {
 
 	public function __construct() {
 
-		delete_option( sanitize_key( __CLASS__ ) );
+		#delete_option( sanitize_key( __CLASS__ ) );
 
 		$this -> subsite_settings = new SubsiteSettings;
 
@@ -64,6 +64,9 @@ class Import {
 			$url = add_query_arg( array( 'startIndex' => $start_index ), $url );
 
 			$get  = wp_remote_get( $url );
+
+			if( is_wp_error( $get ) ) { return FALSE; }
+
 			$body = $get['body'];
 
 			@$classname    = 'playerTableTable';

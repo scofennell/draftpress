@@ -28,3 +28,15 @@
 .DraftPressPostMetaBox-get_field-checkbox:last-child {
 	margin-bottom: 0;
 }
+
+.toplevel_page_DraftPress_subsite .wrap form {
+	margin-bottom: 40px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 40px;
+}
+
+.DraftPressSubsiteControlPanel-get_page-import_forms form:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
