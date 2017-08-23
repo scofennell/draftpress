@@ -82,53 +82,70 @@ class Import {
 
 			foreach( $tbody as $row ) {
 
+				//$row_html = $row -> ownerDocument -> saveHTML( $row );
+
+				if( $row -> textContent == 'PLAYERSSTATUSPASSINGRUSHINGRECEIVINGTOTAL' ) { continue; }
+				if( stristr( $row -> textContent, 'RNKPLAYER' ) ) { continue; }
+
 				$cells     = $row -> childNodes;
+
 				$cell_html = '';
+				$slug = '';
 				foreach( $cells as $cell ) {
 
 					$cell_html = $cell -> ownerDocument -> saveHTML( $cell );
 				
-					if( ! stristr( $cell_html, 'playertablePlayerName' ) ) { continue; }
+					if( stristr( $cell_html, 'playertablePlayerName' ) ) {
 
-					$player_data = $cell -> textContent;
+						$player_data = $cell -> textContent;
 
-					$player_data_arr = explode( ',', $player_data );
-					
+						$player_data_arr = explode( ',', $player_data );
+						
+						if( ! isset( $player_data_arr[1] ) ) {
 
-					if( ! isset( $player_data_arr[1] ) ) {
+							$defense_arr = explode( ' ', $player_data_arr[0] );
+							$name     = $defense_arr[0] . ' dst';
+							$position = 'dst';
+							$team     = $name;
 
-						$defense_arr = explode( ' ', $player_data_arr[0] );
-						$name     = $defense_arr[0] . ' dst';
-						$position = 'dst';
-						$team     = $name;
+						} else {
+						
+							$name = $player_data_arr[0];
+
+							$meta = trim( $player_data_arr[1] );
+				
+							// Split by &nbsp; .
+							$meta_arr = explode( chr(0xC2).chr(0xA0), $meta );
+
+							$team     = strtolower( $meta_arr[0] );
+							$position = strtolower( $meta_arr[1] );
+
+						}
+
+						$name = str_replace( '*', '', $name );
+
+						$slug = sanitize_title_with_dashes( $name );
+
+					} elseif( stristr( $cell_html, 'appliedPoints' ) ) {
+
+						$points = $cell -> textContent;
 
 					} else {
-					
-						$name = $player_data_arr[0];
 
-						$meta = trim( $player_data_arr[1] );
-			
-						// Split by &nbsp; .
-						$meta_arr = explode( chr(0xC2).chr(0xA0), $meta );
-
-						$team     = strtolower( $meta_arr[0] );
-						$position = strtolower( $meta_arr[1] );
+						continue;
 
 					}
 
-					$name = str_replace( '*', '', $name );
-
-					$slug = sanitize_title_with_dashes( $name );
-
-					$rows_arr[ $slug ] = array(
-						'name'     => $name,
-						'position' => $position,
-						'team'     => $team,
-					);
-
-					break;
-
 				}
+
+				if( empty( $slug ) ) { continue; }
+
+				$rows_arr[ $slug ] = array(
+					'name'        => $name,
+					'position'    => $position,
+					'team'        => $team,
+					'espn_points' => $points,
+				);
 			
 			}
 
@@ -137,8 +154,6 @@ class Import {
 			$page++;
 
 		}
-
-		$rows_arr = array_reverse( $rows_arr, TRUE );
 
 		update_option( sanitize_key( __CLASS__ ), $rows_arr );
 
@@ -184,15 +199,18 @@ class Import {
 			$team     = esc_html( $player['team'] );
 			$position = esc_html( $player['position'] );
 
+			$espn_points = floatval( $player['espn_points'] );
+
 			$post_arr = array(
 				'post_status' => 'publish',
 				'post_type'   => 'player',
 				'post_title'  => $comma_name,
 				'meta_input'  => array(
-					'bio-first_name'      => $first_name,
-					'bio-last_name'       => $last_name,
-					'bio-team'            => $team,
-					'roster-' . $position => TRUE,
+					'bio-first_name'       => $first_name,
+					'bio-last_name'        => $last_name,
+					'bio-team'             => $team,
+					'roster-' . $position  => TRUE,
+					'rankings-espn_points' => $espn_points
 				),
 			);
 
@@ -200,7 +218,7 @@ class Import {
 
 			if( is_int( $wp_insert_post ) ) {
 
-				$out[] = $wp_insert_post;
+				$out[] = $slug;
 
 				unset( $rows[ $slug ] );
 
