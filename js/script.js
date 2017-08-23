@@ -30,25 +30,14 @@ var DRAFTPRESS = {
 
 };
 
-/**
- * Our jQuery plugin for doing color pickers.
- */
 jQuery( document ).ready( function() {
 
-	// In our plugin settings page...
 	jQuery( '.DraftPressFields-get_draggable' ).dpSortable();
 	
 });
 
 jQuery( document ).ready( function( $ ) {
 
-	/**
-	 * Define our jQuery plugin for doing a color picker.
-	 * 
-	 * 
-	 * @param  {array}  options An array of options to pass to our plugin.
-	 * @return {object} Returns the item that the plugin was applied to, making it chainable.
-	 */
 	$.fn.dpSortable = function( options ) {
 
 		// For each element to which our plugin is applied...
@@ -59,11 +48,12 @@ jQuery( document ).ready( function( $ ) {
 
 			var parent = $( that ).parent();
 
-			var dataHolder = $( that ).next( 'input' );
+			var dataHolder = $( parent ).find( '.DraftPressFields-get_draggable-hidden' );
 
 			var prefix = $( dataHolder ).attr( 'id' );
 
 			$( that ).sortable({
+				placeholder: 'ui-state-highlight',
 				axis: 'y',
 				containment: parent,
 				scroll: false,
@@ -86,6 +76,46 @@ jQuery( document ).ready( function( $ ) {
 			
 			});
 		    $( that ).disableSelection();
+
+			// Make our plugin chainable.
+			return this;
+
+		// End for each element to which our plugin is applied.
+		});
+
+	// End the definition of our plugin.
+	};
+
+}( jQuery ) );
+
+jQuery( document ).ready( function() {
+
+	jQuery( '.DraftPress-toggle' ).dpToggle();
+	
+});
+
+jQuery( document ).ready( function( $ ) {
+
+	$.fn.dpToggle = function( options ) {
+
+		// For each element to which our plugin is applied...
+		return this.each( function() {
+
+			// Save a reference to the input, so that we may safely use "this" later.
+			var that = this;
+
+			var handle = $( that ).find( '.DraftPress-toggle_handle' );
+
+			var hidden = $( that ).find( '.DraftPress-toggled' );
+
+			var arrow = $( handle ).find( '.dashicons' );
+
+			$( hidden ).hide();
+
+			$( handle ).on( 'click', function() {
+				$( hidden ).fadeToggle();
+				$( arrow ).toggleClass( 'dashicons-arrow-down dashicons-arrow-up' );
+			});
 
 			// Make our plugin chainable.
 			return this;

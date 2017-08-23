@@ -1,6 +1,15 @@
+.DraftPressPostMetaBox-get_field {
+	margin: 0 0 2em 0;
+}
+
+.DraftPressPostMetaBox-get_field:last-child {
+	margin-bottom: 0;
+}
+
 .DraftPressFields-get_draggable {
 	display: table;
 	table-layout: fixed;
+	width: 100%;
 }
 
 .DraftPressFields-get_draggable-item {
@@ -39,4 +48,33 @@
 	margin-bottom: 0;
 	padding-bottom: 0;
 	border-bottom: none;
+}
+
+/**
+ * A landing spot for draggable items.
+ */
+.ui-state-highlight {
+	height: 1.75em;
+	line-height: 1.75em;
+}
+
+.DraftPress-toggle_handle {
+	cursor: pointer;
+	vertical-align: middle;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+.DraftPress-toggle_handle > * {
+	display: inline-block;
+	padding: 0 .25em 0 0;
+	vertical-align: middle;
+}
+
+.DraftPress-toggle_handle .dashicons {
+	font-size: 2em;
+	line-height: 0;
+	height: auto;
+	width: auto;
 }

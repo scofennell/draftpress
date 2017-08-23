@@ -116,14 +116,12 @@ class PostMetaFields {
 							'overall' => array(
 								'label'       => esc_html__( 'Overall', 'dp' ),
 								'type'        => 'draggable',
-								'description' => esc_html__( 'The order in which players are ranked.', 'dp' ),
 								'items'       => array( 'Players', 'get_as_draggable_items' ),
 							),	
 
 							'rb' => array(
 								'label'       => esc_html__( 'Runningbacks', 'dp' ),
 								'type'        => 'draggable',
-								'description' => esc_html__( 'The order in which runningbacks are ranked.', 'dp' ),
 								'items'       => array( 'Players', 'get_rbs_as_draggable_items' ),
 							),																		
 

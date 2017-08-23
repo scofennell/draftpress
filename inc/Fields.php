@@ -110,8 +110,8 @@ class Fields {
 
 		if( ! empty( $out ) ) {
 			$out = "
+				<input class='$class-hidden widefat' type='hidden' tab-index='-1' value='$current_value' id='$id' name='$name'>
 				<div class='$class'>$out</div>
-				<input class='$class-hidden widefat' type='' value='$current_value' id='$id' name='$name'>
 			";
 		}
 

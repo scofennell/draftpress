@@ -126,7 +126,7 @@ trait Form {
 
 		$label = '';
 		if( $use_label ) {
-			$label = "<div><label for='$id'>$setting_label</label></div>";
+			$label = "<label class='$class-label' for='$id'>$setting_label</label>";
 		}
 
 		// The type of input.
@@ -181,6 +181,8 @@ trait Form {
 
 		} elseif( $type == 'draggable' ) {
 
+			$toggle = TRUE;
+
 			$value = esc_attr( $value );
 
 			$fields = new Fields( $value, $id, $name );
@@ -211,10 +213,17 @@ trait Form {
 				}
 			}
 
+			$toggle        = DRAFTPRESS . '-toggle';
+			$toggle_handle = DRAFTPRESS . '-toggle_handle';
+			$toggled       = DRAFTPRESS . '-toggled';
+			$toggle_icon   = '<span class="dashicons dashicons-arrow-down"></span>';
+
 			// Wrap the input.
 			$input = "
-				$label
-				$draggable
+				<div class='$toggle'>
+					<div class='$toggle_handle'>$label$toggle_icon</div>
+					<div class='$toggled'>$draggable</div>
+				</div>
 			";
 
 		} else {
