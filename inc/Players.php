@@ -23,6 +23,9 @@ class Players {
 		$args = array(
 			'post_type'      => 'player',
 			'posts_per_page' => 9999,
+			'meta_key'       => 'rankings-espn_points',
+			'orderby'        => 'meta_value_num',
+			'order'          => 'desc',
 		);
 
 		if( is_string( $positions ) ) {
@@ -44,8 +47,6 @@ class Players {
 			$args['meta_query'] = $meta_query;
 
 		}
-
-		var_dump( $args );
 
 		$the_query = new \WP_Query( $args );
 
