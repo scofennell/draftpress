@@ -85,7 +85,7 @@ class PostTypes {
 				),
 				'description'        => __( 'Rankings.', 'dp' ),
 				'public'             => FALSE,
-				'publicly_queryable' => FALSE,
+				'publicly_queryable' => TRUE,
 				'show_ui'            => TRUE,
 				'show_in_menu'       => TRUE,
 				'query_var'          => FALSE,
