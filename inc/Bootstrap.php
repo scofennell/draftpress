@@ -33,6 +33,7 @@ class Bootstrap {
 		$draftpress -> post_meta_box         = new PostMetaBox;
 		$draftpress -> user_meta_box         = new UserMetaBox;
 		$draftpress -> post_types            = new PostTypes;
+		$draftpress -> rest                  = new REST;		
 		$draftpress -> subsite_settings      = new SubsiteSettings;
 		$draftpress -> subsite_control_panel = new SubsiteControlPanel;
 		$draftpress -> update                = new Update;
