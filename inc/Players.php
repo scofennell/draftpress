@@ -91,14 +91,17 @@ class Players {
 			$player   = new Player( $k );
 			$name     = $player -> get_name();
 			$team     = $player -> get_team();
+			$logo     = new Logo( $team, 35 );
+			$logo     = $logo -> get();
 			$position = $player -> get_position();
 
 
 			$name     = '<strong>' . $name     . '</strong>';
-			$team     = '<span>'   . $team     . '</span>';
+			//$team     = '<span>'   . $team     . '</span>';
+
 			$position = '<em>'     . $position . '</em>';
 			
-			$label = "$name $team $position";
+			$label = "$name $logo $position";
 
 			$unordered[ $k ] = $label;
 
