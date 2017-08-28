@@ -33,18 +33,24 @@ class REST {
 
 		$fields = $this -> meta_fields;
 
-		foreach( $fields as $section_k => $section ) {
+		foreach( $fields as $post_type_k => $post_type ) {
 
-			$settings = $section['settings'];
+			$sections = $post_type['sections'];
 
-			foreach( $settings as $setting_k => $setting ) {
+			foreach( $sections as $section_k => $section ) {
 
-				register_meta( $object_type, $section_k . '-' . $setting_k, $args );	
+				$settings = $section['settings'];
+
+				foreach( $settings as $setting_k => $setting ) {
+
+					register_meta( $object_type, $section_k . '-' . $setting_k, $args );	
+
+				}
 
 			}
-
+		
 		}
-	
+
 	}
 
 }
