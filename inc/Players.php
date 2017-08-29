@@ -80,6 +80,8 @@ class Players {
 
 	function get_as_draggable_items( $order, $players = FALSE ) {
 
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
 		if( ! $players ) {
 			$players = $this -> get();
 		}
@@ -91,15 +93,15 @@ class Players {
 			$player   = new Player( $k );
 			$name     = $player -> get_name();
 			$team     = $player -> get_team();
-			$logo     = new Logo( $team, 35 );
+			$logo     = new Logo( $team );
 			$logo     = $logo -> get();
 			$position = $player -> get_position();
 
 
-			$name     = '<strong>' . $name     . '</strong>';
+			$name     = "<strong class='$class-name'>$name</strong>";
 			//$team     = '<span>'   . $team     . '</span>';
 
-			$position = '<em>'     . $position . '</em>';
+			$position = "<em class='$class-position'>$position</em>";
 			
 			$label = "$name $logo $position";
 

@@ -7,20 +7,24 @@
 }
 
 .DraftPressFields-get_draggable {
-	display: table;
-	table-layout: fixed;
 	width: 100%;
 }
 
 .DraftPressFields-get_draggable-item {
-	display: table-row;
 	cursor: move;
+	padding: 5px;
+	border-bottom: 1px dotted #ccc;
+	min-height: 2em;
 }
 
 .DraftPressFields-get_draggable-item > * {
-	display: table-cell;
-	padding: 5px;
-	border-bottom: 1px dotted #ccc;
+	display: inline-block;	
+	vertical-align: middle;
+}
+
+.DraftPressFields-get_draggable-item .DraftPressLogo-get {
+	width: 30px;
+	height: auto;
 }
 
 .DraftPressPostMetaBox-get_field-checkbox-wrapper > * {

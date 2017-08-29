@@ -12,22 +12,24 @@ namespace DraftPress;
 
 class Logo {
 
-	public function __construct( $team_slug, $width ) {
+	public function __construct( $team_slug ) {
 
 		$this -> team_slug = $team_slug;
-		$this -> width     = $width;		
+		//$this -> width     = $width;		
 
 	}
 
 	function get() {
 
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
 		$src = DRAFTPRESS_URL . 'img/logos/' . $this -> team_slug . '.png';
 
 		$alt = esc_attr( $this -> team_slug );
 
-		$width = absint( $this -> width );
+		//$width = absint( $this -> width );
 
-		$img = "<img src='$src' width='$width' alt='$alt'>";
+		$img = "<img class='$class' src='$src' alt='$alt'>";
 
 		return $img;
 
