@@ -8,18 +8,33 @@
 
 .DraftPressFields-get_draggable {
 	width: 100%;
+	counter-reset: draggable-counter;
 }
 
 .DraftPressFields-get_draggable-item {
 	cursor: move;
 	padding: 5px;
 	border-bottom: 1px dotted #ccc;
+	display: flex;
+	align-items: center;
 	min-height: 2em;
 }
 
+.DraftPressFields-get_draggable-item:before {
+	content: counter(draggable-counter);
+	counter-increment: draggable-counter;
+	font-weight: 600;
+	display: inline-block;
+	margin-right: .75em
+}
+
 .DraftPressFields-get_draggable-item > * {
-	display: inline-block;	
-	vertical-align: middle;
+margin-right: 10px;
+}
+
+.DraftPressPlayers-get_as_draggable_items-name {
+	white-space: nowrap;
+	min-width: 33%;
 }
 
 .DraftPressFields-get_draggable-item .DraftPressLogo-get {
@@ -72,7 +87,7 @@
 
 .DraftPress-toggle_handle > * {
 	display: inline-block;
-	padding: 0 .25em 0 0;
+	padding: 0;
 	vertical-align: middle;
 }
 

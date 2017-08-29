@@ -30,6 +30,7 @@ class Bootstrap {
 		$draftpress -> user_meta_fields      = new UserMetaFields;	
 
 		$draftpress -> admin_query           = new AdminQuery;
+		$draftpress -> content_filters       = new ContentFilters;
 		$draftpress -> post_meta_box         = new PostMetaBox;
 		$draftpress -> user_meta_box         = new UserMetaBox;
 		$draftpress -> post_types            = new PostTypes;

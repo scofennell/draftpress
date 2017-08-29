@@ -221,7 +221,7 @@ trait Form {
 			// Wrap the input.
 			$input = "
 				<div class='$toggle'>
-					<div class='$toggle_handle'>$label$toggle_icon</div>
+					<div class='$toggle_handle'>$toggle_icon$label</div>
 					<div class='$toggled'>$draggable</div>
 				</div>
 			";

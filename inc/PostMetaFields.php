@@ -162,6 +162,26 @@ class PostMetaFields {
 
 	}
 
+	function get_section_values( $post_id, $section_id ) {
+
+		$out = array();
+
+		$values = $this -> get_values( $post_id );
+
+		foreach( $values as $k => $v ) {
+
+			$k_arr = explode( '-', $k );
+			$section = $k_arr[0];
+			if( $section != $section_id ) { continue; }
+
+			$out[ $k ] = $v;
+
+		}
+
+		return $out;
+
+	}
+
 	/**
 	 * Get the value for a meta field.
 	 * 
