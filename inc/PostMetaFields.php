@@ -171,10 +171,15 @@ class PostMetaFields {
 		foreach( $values as $k => $v ) {
 
 			$k_arr = explode( '-', $k );
+			if( ! isset( $k_arr[1] ) ) { continue; }
+
+
 			$section = $k_arr[0];
+
+			$setting = $k_arr[1];
 			if( $section != $section_id ) { continue; }
 
-			$out[ $k ] = $v;
+			$out[ $setting ] = $v;
 
 		}
 

@@ -1,0 +1,17 @@
+.DraftPressRankings-get {
+	width: 100%;
+}
+
+.DraftPressRankings-get-player > * {
+	display: inline-block;
+}
+
+.DraftPressRankings-get-player {
+	min-height: 2em;
+}
+
+.DraftPressRankings-get-name {
+	font-weight: 600;
+	min-width: 50%;
+	white-space: nowrap;
+}
