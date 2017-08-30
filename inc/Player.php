@@ -28,7 +28,19 @@ class Player {
 
 	function get_team() {
 
-		return $this -> post_meta_fields -> get_value( $this -> id, 'bio', 'team' );
+		$out = $this -> post_meta_fields -> get_value( $this -> id, 'bio', 'team' );
+
+		$words = explode( ' ', $out );
+
+		$count = count( $words );
+
+		if( $count == 1 ) { return $out; }
+
+		$mascot = $words[0];
+
+		$out = $mascot;
+
+		return $out;
 
 	}
 

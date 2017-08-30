@@ -17,103 +17,132 @@ class Teams {
 		$out = array(
 		
 			'ari' => array(
-				'label' => esc_html__( 'Arizona Cardinals', 'dp' ),
+				'mascot'   => esc_html__( 'Cardinals', 'dp' ),
+				'location' => esc_html__( 'Arizona', 'dp' ),
 			),
 			'atl' => array(
-				'label' => esc_html__( 'Atlanta Falcons', 'dp' ),
+				'mascot'   => esc_html__( 'Falcons', 'dp' ),
+				'location' => esc_html__( 'Atlanta', 'dp' ),
 			),	
 			'bal' => array(
-				'label' => esc_html__( 'Baltimore Ravens', 'dp' ),
+				'mascot'   => esc_html__( 'Ravens', 'dp' ),
+				'location' => esc_html__( 'Baltimore', 'dp' ),
 			),
 			'buf' => array(
-				'label' => esc_html__( 'Buffalo Bills', 'dp' ),
+				'mascot'   => esc_html__( 'Bills', 'dp' ),
+				'location' => esc_html__( 'Buffalo', 'dp' ),
 			),	
 			'car' => array(
-				'label' => esc_html__( 'Carolina Panthers', 'dp' ),
+				'mascot'   => esc_html__( 'Panthers', 'dp' ),
+				'location' => esc_html__( 'Carolina', 'dp' ),
 			),	
 			'chi' => array(
-				'label' => esc_html__( 'Chicago Bears', 'dp' ),
+				'mascot'   => esc_html__( 'Bears', 'dp' ),
+				'location' => esc_html__( 'Chicago', 'dp' ),
 			),	
 			'cin' => array(
-				'label' => esc_html__( 'Cincinnati Bengals', 'dp' ),
+				'mascot'   => esc_html__( 'Bengals', 'dp' ),
+				'location' => esc_html__( 'Cincinnati', 'dp' ),
 			),	
 			'cle' => array(
-				'label' => esc_html__( 'Cleveland Browns', 'dp' ),
+				'mascot'   => esc_html__( 'Browns', 'dp' ),
+				'location' => esc_html__( 'Cleveland', 'dp' ),
 			),
 			'dal' => array(
-				'label' => esc_html__( 'Dallas Cowboys', 'dp' ),
+				'mascot'   => esc_html__( 'Cowboys', 'dp' ),
+				'location' => esc_html__( 'Dallas', 'dp' ),
 			),
 			'den' => array(
-				'label' => esc_html__( 'Denver Broncos', 'dp' ),
+				'mascot'   => esc_html__( 'Broncos', 'dp' ),
+				'location' => esc_html__( 'Denver', 'dp' ),
 			),
 			'det' => array(
-				'label' => esc_html__( 'Detroit Lions', 'dp' ),
+				'mascot'   => esc_html__( 'Lions', 'dp' ),
+				'location' => esc_html__( 'Detroit', 'dp' ),
 			),	
 			'gb' => array(
-				'label' => esc_html__( 'Green Bay Packers', 'dp' ),
+				'mascot'   => esc_html__( 'Packers', 'dp' ),
+				'location' => esc_html__( 'Green Bay', 'dp' ),
 			),
 			'hou' => array(
-				'label' => esc_html__( 'Houston Texans', 'dp' ),
+				'mascot'   => esc_html__( 'Texans', 'dp' ),
+				'location' => esc_html__( 'Houston', 'dp' ),
 			),	
 			'ind' => array(
-				'label' => esc_html__( 'Indianapolis Colts', 'dp' ),
+				'mascot'   => esc_html__( 'Colts', 'dp' ),
+				'location' => esc_html__( 'Indianapolis', 'dp' ),
 			),	
-			'jac' => array(
-				'label' => esc_html__( 'Jacksonville Jaguars', 'dp' ),
+			'jax' => array(
+				'mascot'   => esc_html__( 'Jaguars', 'dp' ),
+				'location' => esc_html__( 'Jacksonville', 'dp' ),
 			),	
 			'kc' => array(
-				'label' => esc_html__( 'Kansas City Chiefs', 'dp' ),
+				'mascot'   => esc_html__( 'Chiefs', 'dp' ),
+				'location' => esc_html__( 'Kansas City', 'dp' ),
 			),
 			'lac' => array(
-				'label' => esc_html__( 'Los Angeles Chargers', 'dp' ),
+				'mascot'   => esc_html__( 'Chargers', 'dp' ),
+				'location' => esc_html__( 'Los Angeles', 'dp' ),
 			),	
 			'lar' => array(
-				'label' => esc_html__( 'Los Angeles Rams', 'dp' ),
+				'mascot'   => esc_html__( 'Rams', 'dp' ),
+				'location' => esc_html__( 'Los Angeles', 'dp' ),
 			),	
 			'mia' => array(
-				'label' => esc_html__( 'Miami Dolphins', 'dp' ),
+				'mascot'   => esc_html__( 'Dolphins', 'dp' ),
+				'location' => esc_html__( 'Miami', 'dp' ),
 			),	
 			'min' => array(
-				'label' => esc_html__( 'Minnesota Vikings', 'dp' ),
+				'mascot'   => esc_html__( 'Vikings', 'dp' ),
+				'location' => esc_html__( 'Minnesota', 'dp' ),
 			),	
 			'ne' => array(
-				'label' => esc_html__( 'New England Patriots', 'dp' ),
+				'mascot'   => esc_html__( 'Patriots', 'dp' ),
+				'location' => esc_html__( 'New England', 'dp' ),
 			),	
 			'no' => array(
-				'label' => esc_html__( 'New Orleans Saints', 'dp' ),
+				'mascot'   => esc_html__( 'Saints', 'dp' ),
+				'location' => esc_html__( 'New Orleans', 'dp' ),
 			),	
 			'nyg' => array(
-				'label' => esc_html__( 'New York Giants', 'dp' ),
+				'mascot'   => esc_html__( 'Giants', 'dp' ),
+				'location' => esc_html__( 'New York', 'dp' ),
 			),	
 			'nyj' => array(
-				'label' => esc_html__( 'New York Jets', 'dp' ),
+				'mascot'   => esc_html__( 'Jets', 'dp' ),
+				'location' => esc_html__( 'New York', 'dp' ),
 			),	
 			'oak' => array(
-				'label' => esc_html__( 'Oakland Raiders', 'dp' ),
+				'mascot'   => esc_html__( 'Raiders', 'dp' ),
+				'location' => esc_html__( 'Oakland', 'dp' ),
 			),	
 			'phi' => array(
-				'label' => esc_html__( 'Philadelphia Eagles', 'dp' ),
+				'mascot'   => esc_html__( 'Eagles', 'dp' ),
+				'location' => esc_html__( 'Philadelphia', 'dp' ),
 			),	
 			'pit' => array(
-				'label' => esc_html__( 'Pittsburgh Steelers', 'dp' ),
-			),	
-			'sd' => array(
-				'label' => esc_html__( 'San Diego Chargers', 'dp' ),
+				'mascot'   => esc_html__( 'Steelers', 'dp' ),
+				'location' => esc_html__( 'Pittsburgh', 'dp' ),
 			),	
 			'sea' => array(
-				'label' => esc_html__( 'Seattle Seahawks', 'dp' ),
+				'mascot'   => esc_html__( 'Seahawks', 'dp' ),
+				'location' => esc_html__( 'Seattle', 'dp' ),
 			),	
 			'sf' => array(
-				'label' => esc_html__( 'San Francisco 49ers', 'dp' ),
+				'mascot'   => esc_html__( '49ers', 'dp' ),
+				'location' => esc_html__( 'San Francisco', 'dp' ),
 			),
 			'tb' => array(
-				'label' => esc_html__( 'Tampa Bay Buccaneers', 'dp' ),
+				'mascot'   => esc_html__( 'Buccaneers', 'dp' ),
+				'location' => esc_html__( 'Tampa Bay', 'dp' ),
 			),	
 			'ten' => array(
-				'label' => esc_html__( 'Tennessee Titans', 'dp' ),
+				'mascot'   => esc_html__( 'Titans', 'dp' ),
+				'location' => esc_html__( 'Tennessee', 'dp' ),
 			),	
-			'was' => array(
-				'label' => esc_html__( 'Washington Redskins', 'dp' ),
+			'wsh' => array(
+				'mascot'   => esc_html__( 'Redskins', 'dp' ),
+				'location' => esc_html__( 'Washington', 'dp' ),
 			),	
 
 		);
@@ -130,7 +159,14 @@ class Teams {
 
 		foreach( $arr as $k => $v ) {
 
-			$out[ $k ] = $v['label'];
+			$logo = new Logo( $k );
+			$logo = $logo -> get();
+
+			$text = '<span>' . $v['location'] . ' ' . $v['mascot'] . '</span>';
+
+			$label = $logo . $text;
+
+			$out[ $k ] = $label;
 
 		}
 

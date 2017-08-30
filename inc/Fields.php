@@ -73,7 +73,6 @@ class Fields {
 
 			$k         = esc_attr( $k );
 			$button_id = esc_attr( $button_id );			
-			$v         = esc_html( $v );
 
 			$out .= "
 				<div class='$css_class-item'>
