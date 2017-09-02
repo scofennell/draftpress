@@ -124,6 +124,11 @@ trait Form {
 		// Name the setting so it will be saved as an array.
 		$name = DRAFTPRESS . '[' . $section_id . '-' . $setting_id . ']';
 
+		$atts ='';
+		if( isset( $setting['atts'] ) ) {
+			$atts = $this -> get_attrs_from_array( $setting['atts'] );
+		}
+
 		$label = '';
 		if( $use_label ) {
 			$label = "<label class='$class-label' for='$id'>$setting_label</label>";
@@ -231,7 +236,7 @@ trait Form {
 			// Wrap the input.
 			$input = "
 				$label
-				<input class='regular-text' type='$type' id='$id' name='$name' value='$value'>
+				<input class='regular-text' $atts type='$type' id='$id' name='$name' value='$value'>
 			";
 
 		}

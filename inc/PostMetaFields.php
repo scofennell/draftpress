@@ -105,6 +105,35 @@ class PostMetaFields {
 				'sections' => array(
 
 					// A section.
+					'scope' => array(
+
+						// The label for this section.
+						'label' => esc_html__( 'Scope', 'dp' ),
+
+						// The settings for this section.
+						'settings' => array(
+
+							'year' => array(
+								'label'       => esc_html__( 'Year', 'dp' ),
+								'type'        => 'number',
+								'default'     => date( 'Y', time() ),
+								'atts' => array(
+									'max'       => 2100,
+									'min' => 2000,
+								)
+							),	
+
+							'week' => array(
+								'label'       => esc_html__( 'Week', 'dp' ),
+								'type'        => 'select',
+								'items'       => array( 'Schedule', 'get_weeks_as_array' ),
+							),																		
+
+						),
+
+					),
+
+					// A section.
 					'players' => array(
 
 						// The label for this section.
