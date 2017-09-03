@@ -183,6 +183,22 @@ class Teams {
 
 	}
 
+	function get_team_key_by_mascot( $mascot ) {
+
+		$teams = $this -> get();
+
+		foreach( $teams as $team_k => $team ) {
+
+			if( $team['mascot'] == $mascot ) {
+
+				return $team_k;
+
+			} 
+
+		}
+
+	}
+
 	function get_as_kv() {
 
 		$arr = $this -> get();

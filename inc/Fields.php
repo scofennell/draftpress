@@ -129,4 +129,35 @@ class Fields {
 
 	}
 
+	function get_multinumber( $items ) {
+
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		wp_enqueue_script( 'jquery-ui-sortable' );
+
+		$out = '';
+
+		$id   = $this -> id;
+		$name = $this -> name;
+		$current_value = esc_attr( $this -> current_value );
+
+		if( ! is_array( $items ) ) { return FALSE; }
+
+		foreach( $items as $k => $v ) {
+			$k = esc_attr( $k );
+			$v = $v;
+			$out .= "<div class='$class-item' id='$id-$k'>$v</div>";
+		}
+
+		if( ! empty( $out ) ) {
+			$out = "
+				<input class='$class-hidden widefat' type='hidden' tab-index='-1' value='$current_value' id='$id' name='$name'>
+				<div class='$class'>$out</div>
+			";
+		}
+
+		return $out;
+
+	}	
+
 }

@@ -103,7 +103,54 @@ class Players {
 
 			$position = "<em class='$class-position'>$position</em>";
 			
-			$label = "$name $logo $position";
+			$label = "$logo $position $name";
+
+			$unordered[ $k ] = $label;
+
+		}
+
+		$ordered = array();
+		foreach( $order as $order_k => $null ) {
+
+			if( ! isset( $unordered[ $order_k ] ) ) { continue; }
+
+			$ordered[ $order_k ] = $unordered[ $order_k ];
+			unset( $unordered[ $order_k ] );
+
+		}
+
+		$out = $ordered + $unordered;
+
+		return $out;
+
+	}
+
+	function get_as_multinumber( $order, $players = FALSE ) {
+
+		$class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		if( ! $players ) {
+			$players = $this -> get();
+		}
+
+		$unordered = array();
+
+		foreach( $players as $k => $v ) {
+
+			$player   = new Player( $k );
+			$name     = $player -> get_name();
+			$team     = $player -> get_team();
+			$logo     = new Logo( $team );
+			$logo     = $logo -> get();
+			$position = $player -> get_position();
+
+
+			$name     = "<strong class='$class-name'>$name</strong>";
+			//$team     = '<span>'   . $team     . '</span>';
+
+			$position = "<em class='$class-position'>$position</em>";
+			
+			$label = "$logo $position $name";
 
 			$unordered[ $k ] = $label;
 

@@ -34,11 +34,15 @@ class Player {
 
 		$count = count( $words );
 
-		if( $count == 1 ) { return $out; }
+		if( $count > 1 ) {
 
-		$mascot = $words[0];
+			$mascot = $words[0];
 
-		$out = $mascot;
+			$teams = new Teams();
+
+			$out = $teams -> get_team_key_by_mascot( $mascot );
+
+		}
 
 		return $out;
 

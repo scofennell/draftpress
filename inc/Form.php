@@ -205,9 +205,45 @@ trait Form {
 				<textarea class='widefat' id='$id' name='$name'>$value</textarea>
 			";
 
-		} elseif( $type == 'draggable' ) {
+		} elseif( $type == 'multinumber' ) {
 
-			$toggle = TRUE;
+			$value = esc_attr( $value );
+
+			$fields = new Fields( $value, $id, $name );
+
+			$multinumber = '';
+			$items_class = __NAMESPACE__ . '\\' . $items[0];
+
+			if( class_exists( $items_class ) ) {
+				
+				$items_method = $items[1];
+				$items_obj = new $items_class;
+				$order_arr = explode( ',', $value );
+				$order_clean = array();
+				foreach( $order_arr as $item ) {
+					$order_clean[ $item ] = NULL;
+				}
+				
+				$items_arr = call_user_func( array( $items_obj, $items_method ), $order_clean );
+				
+				$multinumber = $fields -> get_multinumber( $items_arr );
+
+			}
+
+			$toggle        = DRAFTPRESS . '-toggle';
+			$toggle_handle = DRAFTPRESS . '-toggle_handle';
+			$toggled       = DRAFTPRESS . '-toggled';
+			$toggle_icon   = '<span class="dashicons dashicons-arrow-down"></span>';
+
+			// Wrap the input.
+			$input = "
+				<div class='$toggle'>
+					<div class='$toggle_handle'>$toggle_icon$label</div>
+					<div class='$toggled'>$multinumber</div>
+				</div>
+			";
+
+		} elseif( $type == 'draggable' ) {
 
 			$value = esc_attr( $value );
 

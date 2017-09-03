@@ -6,11 +6,13 @@
 	margin-bottom: 0;
 }
 
+.DraftPressFields-get_multinumber,
 .DraftPressFields-get_draggable {
 	width: 100%;
 	counter-reset: draggable-counter;
 }
 
+.DraftPressFields-get_multinumber-item,
 .DraftPressFields-get_draggable-item {
 	cursor: move;
 	padding: 5px;
@@ -20,6 +22,7 @@
 	min-height: 2em;
 }
 
+.DraftPressFields-get_multinumber-item:before,
 .DraftPressFields-get_draggable-item:before {
 	content: counter(draggable-counter);
 	counter-increment: draggable-counter;
@@ -28,20 +31,22 @@
 	margin-right: .75em
 }
 
+.DraftPressFields-get_multinumber-item > *,
 .DraftPressFields-get_draggable-item > * {
-margin-right: 10px;
+	margin-right: 10px;
 }
 
+.DraftPressPlayers-get_as_multinumber-name,
 .DraftPressPlayers-get_as_draggable_items-name {
 	white-space: nowrap;
 	min-width: 33%;
 }
 
+.DraftPressFields-get_multinumber-item .DraftPressLogo-get,
 .DraftPressFields-get_draggable-item .DraftPressLogo-get {
 	width: 30px;
 	height: auto;
 }
-
 
 /**
  * A landing spot for draggable items.
@@ -72,9 +77,15 @@ margin-right: 10px;
 	background-color: rgba( 255, 255, 255, .8 );
 }
 
-.DraftPressPostMetaBox-get_field-checkbox-wrapper > * {
+.DraftPressPostMetaBox-get_field-checkbox-wrapper {
+	vertical-align: middle;
+}
+
+html body .DraftPressPostMetaBox-get_field-checkbox-wrapper > * {
 	display: inline-block;
 	vertical-align: middle;
+	margin: 0 .5em 0 0;
+	padding: 0;
 }
 
 .DraftPressFields-get_array_as_radios-item,
@@ -109,11 +120,13 @@ margin-right: 10px;
 	min-height: 2.5em;
 }
 
+.DraftPressFields-get_array_as_radios-item > input[type = radio],
 .DraftPressFields-get_array_as_radios-item > *,
 .DraftPressFields-get_array_as_radios-item label > * {
 	display: inline-block;
 	vertical-align: middle;
-	margin-right: .5em;
+	margin: 0 .5em 0 0;
+	padding: 0;
 }
 
 .DraftPress-toggle_handle {

@@ -187,10 +187,10 @@ class PostMetaBox {
 
 			foreach( $meta_box['sections'] as $section_id => $section ) {
 
-				if( isset( $section['condition'] ) ) {
+				/*if( isset( $section['condition'] ) ) {
 					$condition = $this -> parse_callable( $section['condition'] );
 					if( ! $condition ) { continue; }
-				}
+				}*/
 
 				$i++;
 
@@ -348,11 +348,11 @@ class PostMetaBox {
 
 		foreach( $sections as $section_id => $section ) {
 
-			$condition = TRUE;
+			/*$condition = TRUE;
 			if( isset( $section['condition'] ) ) {
 				$condition = $this -> parse_callable( $section['condition'] );
 				if( ! $condition ) { continue; }
-			}
+			}*/
 
 			$settings = $section['settings'];
 
@@ -368,9 +368,9 @@ class PostMetaBox {
 
 			foreach( $settings as $setting_id => $setting ) {
 
-				if( $setting['type'] != 'checkbox' ) {
+				/*if( $setting['type'] != 'checkbox' ) {
 					if( ! isset( $posted_data[ "$section_id-$setting_id" ] ) ) { continue; }
-				}
+				}*/
 
 				$value = $posted_data[ "$section_id-$setting_id" ];
 
