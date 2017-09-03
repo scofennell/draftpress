@@ -110,6 +110,7 @@ html body .DraftPressPostMetaBox-get_field-checkbox-wrapper > * {
 	border-bottom: none;
 }
 
+.DraftPressFields-get_multinumber-item .DraftPressLogo-get,
 .DraftPressFields-get_array_as_radios-item .DraftPressLogo-get {
 	width: 35px;
 	height: auto;
