@@ -187,10 +187,10 @@ class PostMetaBox {
 
 			foreach( $meta_box['sections'] as $section_id => $section ) {
 
-				/*if( isset( $section['post_format'] ) ) {
-					$post_format = get_post_format();
-					if( $post_format !== $section['post_format'] ) { continue; }
-				}*/
+				if( isset( $section['condition'] ) ) {
+					$condition = $this -> parse_callable( $section['condition'] );
+					if( ! $condition ) { continue; }
+				}
 
 				$i++;
 
@@ -205,13 +205,7 @@ class PostMetaBox {
 
 					$type = $settings['type'];
 
-					$items_cb = $settings['items_cb'];
-
-					$items_cb_class  = __NAMESPACE__ . '\\' . $items_cb[0];
-					$items_cb_obj    = new $items_cb_class;
-					$items_cb_method = $items_cb[1];
-				
-					$cb_settings = call_user_func( array( $items_cb_obj, $items_cb_method ) );
+					$cb_settings = $this -> parse_callable( $settings['items_cb'] );
 
 					$cb_settings_out = array();
 
@@ -344,6 +338,8 @@ class PostMetaBox {
 
 	function update_meta( $post_id, $posted_data ) {
 
+		$out = array();
+
 		$post_type = get_post_type( $post_id );
 
 		$field = $this -> meta_fields[ $post_type ];
@@ -352,17 +348,39 @@ class PostMetaBox {
 
 		foreach( $sections as $section_id => $section ) {
 
+			$condition = TRUE;
+			if( isset( $section['condition'] ) ) {
+				$condition = $this -> parse_callable( $section['condition'] );
+				if( ! $condition ) { continue; }
+			}
+
 			$settings = $section['settings'];
+
+			if( isset( $settings['items_cb'] ) ) {
+
+				$type = $settings['type'];
+
+				$cb_settings = $this -> parse_callable( $settings['items_cb'] );
+
+				$settings = $cb_settings;
+
+			}
 
 			foreach( $settings as $setting_id => $setting ) {
 
+				if( $setting['type'] != 'checkbox' ) {
+					if( ! isset( $posted_data[ "$section_id-$setting_id" ] ) ) { continue; }
+				}
+
 				$value = $posted_data[ "$section_id-$setting_id" ];
 
-				update_post_meta( $post_id, "$section_id-$setting_id", $value );
+				$out[ "$section_id-$setting_id" ][$value] = update_post_meta( $post_id, "$section_id-$setting_id", $value );
 
 			}
 
 		}
+
+		return $out;
 
 	}	
 

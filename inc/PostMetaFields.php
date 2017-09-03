@@ -91,6 +91,21 @@ class PostMetaFields {
 
 					),
 
+					'attributes'  => array(
+
+						// The label for this section.
+						'label' => esc_html__( 'Attributes of This Player', 'dp' ),
+
+						// The settings for this section.
+						'settings' => array(
+
+							'items_cb' => array( 'Attributes', 'get' ),
+							'type'     => 'checkbox',
+
+						),
+
+					),				
+
 				),
 
 			),
@@ -126,8 +141,23 @@ class PostMetaFields {
 							'week' => array(
 								'label'       => esc_html__( 'Week', 'dp' ),
 								'type'        => 'select',
-								'items'       => array( 'Schedule', 'get_weeks_as_array' ),
+								'choices'     => array( 'Schedule', 'get_weeks_as_array' ),
 							),																		
+
+							'scoring' => array(
+								'label'       => esc_html__( 'Scoring', 'dp' ),
+								'type'        => 'select',
+								'choices'     => array( 'Scoring', 'get_formats_as_array' ),
+							),
+
+							'draft_type' => array(
+								'label'       => esc_html__( 'Draft Type', 'dp' ),
+								'type'        => 'select',
+								'choices'     => array(
+									'standard' => esc_html__( 'Standard', 'dp' ),
+									'auction'  => esc_html__( 'Auction', 'dp' ),
+								),
+							),
 
 						),
 
@@ -138,6 +168,8 @@ class PostMetaFields {
 
 						// The label for this section.
 						'label' => esc_html__( 'Player Rankings', 'dp' ),
+
+						'condition' => array( 'Conditions', 'is_standard' ),
 
 						// The settings for this section.
 						'settings' => array(
@@ -157,6 +189,27 @@ class PostMetaFields {
 						),
 
 					),
+
+					// A section.
+					'auction_values' => array(
+
+						// The label for this section.
+						'label' => esc_html__( 'Auction Values', 'dp' ),
+
+						'condition' => array( 'Conditions', 'is_auction' ),
+
+						// The settings for this section.
+						'settings' => array(
+
+							'overall' => array(
+								'label'       => esc_html__( 'Overall', 'dp' ),
+								'type'        => 'multinumber',
+								'items'       => array( 'Players', 'get_as_multinumber' ),
+							),																	
+
+						),
+
+					),					
 
 				),
 

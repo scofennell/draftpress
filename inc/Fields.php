@@ -25,6 +25,25 @@ class Fields {
 		
 	}
 
+	function get_array_as_select( array $array ) {
+
+		$options = $this -> get_array_as_options( $array );
+
+		$css_class = sanitize_html_class( __CLASS__ . '-' . __FUNCTION__ );
+
+		$name = $this -> name;
+		$id   = $this -> id;
+
+		$out = "
+			<select class='widefat $css_class' id='$id' name='$name'>
+				$options
+			</select>
+		";
+
+		return $out;
+
+	}
+
 	/**
 	 * Convert as associative array to select options.
 	 * 
@@ -58,14 +77,6 @@ class Fields {
 
 		$name = $this -> name;
 		$id   = $this -> id;
-
-		if( class_exists( __NAMESPACE__ . '\\' . $array[0] ) ) {
-
-			$class  = __NAMESPACE__ . '\\' . $array[0];
-			$object = new $class;
-			$method = $array[1];
-			$array  = call_user_func( array( $object, $method ) );
-		}
 
 		foreach( $array as $k => $v ) {
 			$checked = checked( $this -> current_value, $k, FALSE );	

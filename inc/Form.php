@@ -118,6 +118,16 @@ trait Form {
 			$setting_description = '<p class="howto">' . $setting['description'] . '</p>';
 		}
 		
+		$choices = array();
+		if( isset( $setting['choices'] ) ) {
+			$choices = $this -> parse_callable( $setting['choices'] );
+		}
+
+		$items = array();
+		if( isset( $setting['items'] ) ) {
+			$items = $setting['items'];
+		}		
+
 		// Namespace the ID for this setting.
 		$id = DRAFTPRESS . '-' . $section_id . '-' . $setting_id;
 
@@ -140,10 +150,21 @@ trait Form {
 			$type = esc_attr( $setting['type'] );
 		}
 
-		if( $type == 'checkboxes' ) {
+		if( $type == 'select' ) {
+
+			$fields = new Fields( $value, $id, $name );
+			$select = $fields -> get_array_as_select( $choices );
+
+			// Wrap the input.
+			$input = "
+				<div>$setting_label</div>
+				$select
+			";
+
+		} elseif( $type == 'checkboxes' ) {
 
 			$fields     = new Fields( $value, $id, $name );
-			$checkboxes = $fields -> get_array_as_checkboxes( $setting['choices'] );
+			$checkboxes = $fields -> get_array_as_checkboxes( $choices);
 
 			// Wrap the input.
 			$input = "
@@ -154,7 +175,7 @@ trait Form {
 		} elseif( $type == 'radio' ) {
 
 			$fields = new Fields( $value, $id, $name );
-			$radios = $fields -> get_array_as_radios( $setting['choices'] );
+			$radios = $fields -> get_array_as_radios( $choices );
 
 			// Wrap the input.
 			$input = "
@@ -192,30 +213,23 @@ trait Form {
 
 			$fields = new Fields( $value, $id, $name );
 
-			$items = $setting['items'];
 			$draggable = '';
-			if( is_array( $items ) ) {
-				$count = count( $items );
-				if( $count == 2 ) {
+			$items_class = __NAMESPACE__ . '\\' . $items[0];
 
-					$items_class = __NAMESPACE__ . '\\' . $items[0];
-
-					if( class_exists( $items_class ) ) {
-						
-						$items_method = $items[1];
-						$items_obj = new $items_class;
-						$order_arr = explode( ',', $value );
-						$order_clean = array();
-						foreach( $order_arr as $item ) {
-							$order_clean[ $item ] = NULL;
-						}
-						
-						$items_arr = call_user_func( array( $items_obj, $items_method ), $order_clean );
-						
-						$draggable = $fields -> get_draggable( $items_arr );
-
-					}
+			if( class_exists( $items_class ) ) {
+				
+				$items_method = $items[1];
+				$items_obj = new $items_class;
+				$order_arr = explode( ',', $value );
+				$order_clean = array();
+				foreach( $order_arr as $item ) {
+					$order_clean[ $item ] = NULL;
 				}
+				
+				$items_arr = call_user_func( array( $items_obj, $items_method ), $order_clean );
+				
+				$draggable = $fields -> get_draggable( $items_arr );
+
 			}
 
 			$toggle        = DRAFTPRESS . '-toggle';
@@ -235,8 +249,8 @@ trait Form {
 
 			// Wrap the input.
 			$input = "
-				$label
-				<input class='regular-text' $atts type='$type' id='$id' name='$name' value='$value'>
+				<div>$label</div>
+				<input class='widefat' $atts type='$type' id='$id' name='$name' value='$value'>
 			";
 
 		}
@@ -252,6 +266,27 @@ trait Form {
 
 		return $out;
 
-	}	
+	}
+
+	function parse_callable( $var ) {
+
+		if( ! is_array( $var ) ) { return $var; }
+		$count = count( $var );
+		if( $count != 2 ) { return $var; }
+
+		if( ! isset( $var[0] ) ) { return $var; }
+
+		$class = __NAMESPACE__ . '\\' . $var[0];
+		if( ! class_exists( $class ) ) { return $var; }
+
+		$obj = new $class;
+
+		$method = $var[1];
+		
+		$out = call_user_func( array( $obj, $method ) );
+		
+		return $out;
+
+	}
 
 }
