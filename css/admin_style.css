@@ -14,7 +14,6 @@
 
 .DraftPressFields-get_multinumber-item,
 .DraftPressFields-get_draggable-item {
-	cursor: move;
 	padding: 5px;
 	border-bottom: 1px dotted #ccc;
 	display: flex;
