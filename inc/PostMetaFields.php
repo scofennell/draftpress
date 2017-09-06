@@ -191,7 +191,7 @@ class PostMetaFields {
 					),
 
 					// A section.
-					'auction_values' => array(
+					/*'auction_values' => array(
 
 						// The label for this section.
 						'label' => esc_html__( 'Auction Values', 'dp' ),
@@ -209,7 +209,7 @@ class PostMetaFields {
 
 						),
 
-					),					
+					),*/				
 
 				),
 

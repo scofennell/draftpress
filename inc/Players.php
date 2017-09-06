@@ -150,7 +150,9 @@ class Players {
 
 			$position = "<em class='$class-position'>$position</em>";
 			
-			$label = "$logo $position $name";
+			$input = "<input type='number' id='' name='' value=''>";
+
+			$label = "$logo $position $name $input";
 
 			$unordered[ $k ] = $label;
 
