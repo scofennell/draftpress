@@ -30,6 +30,8 @@ class Rankings {
 
 		foreach( $values as $position_slug => $player_ids ) {
 
+			if( empty( $player_ids ) ) { continue; }
+
 			$player_ids = explode( ',', $player_ids );
 
 			$position_items = '';
