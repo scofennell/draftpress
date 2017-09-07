@@ -140,7 +140,7 @@ class Import {
 
 				if( empty( $slug ) ) { continue; }
 
-				$rows_arr[ $slug ] = array(
+				$rows_arr[] = array(
 					'name'        => $name,
 					'position'    => $position,
 					'team'        => $team,
@@ -186,7 +186,7 @@ class Import {
 		$max = 500;
 
 		$i = 0;
-		foreach( $rows as $slug => $player ) {
+		foreach( $rows as $player_i => $player ) {
 
 			if( $i > $max ) { break; }
 
@@ -218,9 +218,9 @@ class Import {
 
 			if( is_int( $wp_insert_post ) ) {
 
-				$out[] = $slug;
+				$out[] = $comma_name;
 
-				unset( $rows[ $slug ] );
+				unset( $rows[ $player_i ] );
 
 			}
 
